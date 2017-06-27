@@ -61,13 +61,19 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
                 [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA]
             session.sessionPreset = .high
             
-            // wire up the session
+            // Load the session
             session.addInput(cameraInput)
             session.addOutput(videoOutput)
             
-            // make sure we are in portrait mode
-            let conn = videoOutput.connection(with: .video)
-            conn?.videoOrientation = .portrait
+            // Portrait mode
+            let connection = videoOutput.connection(with: .video)
+            connection?.videoOrientation = .portrait
+            
+            // Reduce frame rate
+            if (connection?.isVideoMinFrameDurationSupported)! {
+                // Polls requests every 1/2 second
+                connection?.videoMinFrameDuration = CMTimeMake(1, 2)
+            }
             
             // Start the session
             session.startRunning()
