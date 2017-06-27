@@ -65,9 +65,7 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
             session.addInput(cameraInput)
             session.addOutput(videoOutput)
             
-            // Portrait mode
             let connection = videoOutput.connection(with: .video)
-            connection?.videoOrientation = .portrait
             
             // Reduce frame rate
             if (connection?.isVideoMinFrameDurationSupported)! {
@@ -87,9 +85,7 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
                        from connection: AVCaptureConnection) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             return
-        }
-        
-        connection.videoOrientation = .portrait
+        }        
         
         let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer,
                                                         orientation: 1,
