@@ -160,10 +160,6 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
             .map { $0.boundingBox }
             .sorted { $0.minX < $1.minX }
         
-        DispatchQueue.main.async {
-            self.faceRects = self.faceRects.sorted { $0.frame.minX < $1.frame.minX }
-        }
-        
         let delta = results.count - faceRects.count
         
         if delta > 0 {
@@ -178,6 +174,10 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
                     if !self.faceRects.isEmpty { self.faceRects.removeLast() }
                 }
             }
+        }
+        
+        DispatchQueue.main.async {
+            self.faceRects = self.faceRects.sorted { $0.frame.minX < $1.frame.minX }
         }
         
         guard !results.isEmpty else {
