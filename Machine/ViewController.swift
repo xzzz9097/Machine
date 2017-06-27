@@ -112,6 +112,7 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
         
         let results = observations
             .flatMap({$0 as? VNFaceObservation})
+            .map({$0.boundingBox})
         
         print(results)
     }
