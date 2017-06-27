@@ -38,6 +38,16 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
         }
     }
     
+    @IBAction func lowPowerMenuItemClicked(_ sender: Any) {
+        lowPower = !lowPower
+        
+        resetFrameDuration()
+        
+        if let sender = sender as? NSMenuItem {
+            sender.state = lowPower ? .on : .off
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
