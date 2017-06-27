@@ -22,6 +22,8 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     var faceRect = NSView(frame: NSRect())
     
+    var lowPower = false
+    
     @IBOutlet weak var cameraView: NSView!
     
     override func viewDidLoad() {
@@ -76,7 +78,7 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
             let connection = videoOutput.connection(with: .video)
             
             // Reduce frame rate
-            if (connection?.isVideoMinFrameDurationSupported)! {
+            if (connection?.isVideoMinFrameDurationSupported)! && lowPower {
                 // Polls requests every 1/2 second
                 connection?.videoMinFrameDuration = CMTimeMake(1, 2)
             }
@@ -122,6 +124,12 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
             .flatMap({$0 as? VNFaceObservation})
             .map({$0.boundingBox})
         
+        guard !results.isEmpty else {
+            resetFaceRectagle()
+            
+            return
+        }
+        
         for result in results {
             DispatchQueue.main.async {
                 self.faceRect.frame = result.scaled(
@@ -129,6 +137,12 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
                     height: self.cameraView.bounds.height
                 )
             }
+        }
+    }
+    
+    func resetFaceRectagle() {
+        DispatchQueue.main.async {
+            self.faceRect.frame = NSRect()
         }
     }
 
