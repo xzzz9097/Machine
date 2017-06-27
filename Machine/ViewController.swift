@@ -158,6 +158,11 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
         let results = observations
             .flatMap({$0 as? VNFaceObservation})
             .map({$0.boundingBox})
+            .sorted(by: {$0.minX < $1.minX})
+        
+        DispatchQueue.main.async {
+            self.faceRects = self.faceRects.sorted { $0.frame.minX < $1.frame.minX }
+        }
         
         let delta = results.count - faceRects.count
         
