@@ -168,7 +168,7 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
         
         for result in results {
             DispatchQueue.main.async {
-                self.faceRect.frame = result.scaled(
+                self.faceRect.animator().frame = result.scaled(
                     width: self.cameraView.bounds.width,
                     height: self.cameraView.bounds.height
                 )
