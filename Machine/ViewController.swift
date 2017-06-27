@@ -14,6 +14,8 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     let session = AVCaptureSession()
     
+    var connection: AVCaptureConnection!
+    
     var previewLayer: AVCaptureVideoPreviewLayer!
     
     var captureQueue = DispatchQueue(label: "captureQueue")
@@ -24,7 +26,17 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     var lowPower = false
     
+    var shouldTrack = true
+    
     @IBOutlet weak var cameraView: NSView!
+    
+    @IBAction func trackingMenuItemClicked(_ sender: Any) {
+        shouldTrack = !shouldTrack
+        
+        if let sender = sender as? NSMenuItem {
+            sender.state = shouldTrack ? .on : .off
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,13 +87,9 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
             session.addInput(cameraInput)
             session.addOutput(videoOutput)
             
-            let connection = videoOutput.connection(with: .video)
+            connection = videoOutput.connection(with: .video)
             
-            // Reduce frame rate
-            if (connection?.isVideoMinFrameDurationSupported)! && lowPower {
-                // Polls requests every 1/2 second
-                connection?.videoMinFrameDuration = CMTimeMake(1, 2)
-            }
+            resetFrameDuration()
             
             // Start the session
             session.startRunning()
@@ -90,10 +98,28 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
         }
     }
     
+    func setFrameDuration(_ times: CMTime) {
+        // Times per 1/2 seconds
+        if (connection?.isVideoMinFrameDurationSupported)! {
+            connection?.videoMinFrameDuration = times
+        }
+    }
+    
+    func resetFrameDuration() {
+        if lowPower {
+            setFrameDuration(CMTimeMake(1, 2))
+        } else {
+            connection.videoMinFrameDuration = CMTimeMake(0, 2)
+        }
+    }
+    
     func captureOutput(_ output: AVCaptureOutput,
                        didOutput sampleBuffer: CMSampleBuffer,
                        from connection: AVCaptureConnection) {
-        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+        guard   shouldTrack,
+                let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+            resetFaceRectagle()
+                    
             return
         }
         
