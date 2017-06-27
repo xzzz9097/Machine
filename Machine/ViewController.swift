@@ -20,6 +20,8 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     var gradientLayer = CAGradientLayer()
     
+    var faceRect = NSView(frame: NSRect())
+    
     @IBOutlet weak var cameraView: NSView!
     
     override func viewDidLoad() {
@@ -33,12 +35,18 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
     override func viewDidLayout() {
         super.viewDidLayout()
         
-        previewLayer.frame = self.cameraView.bounds;
+        previewLayer.frame  = self.cameraView.bounds;
         gradientLayer.frame = self.cameraView.bounds;
     }
     
     func prepareViews() {
         cameraView.wantsLayer = true
+        faceRect.wantsLayer   = true
+        
+        faceRect.layer?.borderColor = NSColor.yellow.cgColor
+        faceRect.layer?.borderWidth = 1
+        
+        cameraView.addSubview(faceRect)
     }
     
     func loadCaptureSession() {
@@ -114,7 +122,14 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
             .flatMap({$0 as? VNFaceObservation})
             .map({$0.boundingBox})
         
-        print(results)
+        for result in results {
+            DispatchQueue.main.async {
+                self.faceRect.frame = result.scaled(
+                    width: self.cameraView.bounds.width,
+                    height: self.cameraView.bounds.height
+                )
+            }
+        }
     }
 
     override var representedObject: Any? {
@@ -123,5 +138,14 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
         }
     }
 
+}
+
+extension CGRect {
+    func scaled(width: CGFloat, height: CGFloat) -> CGRect {
+        return CGRect(x: self.minX * width,
+                      y: self.minY * height,
+                      width: self.width * width,
+                      height: self.height * height)
+    }
 }
 
