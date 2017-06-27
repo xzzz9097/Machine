@@ -24,13 +24,20 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        prepareViews()
+        
         loadCaptureSession()
     }
     
     override func viewDidLayout() {
         super.viewDidLayout()
+        
         previewLayer.frame = self.cameraView.bounds;
         gradientLayer.frame = self.cameraView.bounds;
+    }
+    
+    func prepareViews() {
+        cameraView.wantsLayer = true
     }
     
     func loadCaptureSession() {
@@ -41,7 +48,6 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
         
         do {
             previewLayer = AVCaptureVideoPreviewLayer(session: session)
-            cameraView.wantsLayer = true
             cameraView.layer?.addSublayer(previewLayer)
             
             let cameraInput = try AVCaptureDeviceInput(device: camera)
