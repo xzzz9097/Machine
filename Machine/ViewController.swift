@@ -28,6 +28,9 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     var shouldTrack = true
     
+    var lowPowerFrameDuration = CMTimeMake(1, 2) // Every 1/2 second
+    var minFrameDuration      = CMTimeMake(0, 0)
+    
     @IBOutlet weak var cameraView: NSView!
     
     @IBAction func trackingMenuItemClicked(_ sender: Any) {
@@ -109,18 +112,15 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
     }
     
     func setFrameDuration(_ times: CMTime) {
-        // Times per 1/2 seconds
         if (connection?.isVideoMinFrameDurationSupported)! {
             connection?.videoMinFrameDuration = times
         }
     }
     
     func resetFrameDuration() {
-        if lowPower {
-            setFrameDuration(CMTimeMake(1, 2))
-        } else {
-            connection.videoMinFrameDuration = CMTimeMake(0, 2)
-        }
+        connection.videoMinFrameDuration =  lowPower ?
+                                            lowPowerFrameDuration :
+                                            minFrameDuration
     }
     
     func captureOutput(_ output: AVCaptureOutput,
