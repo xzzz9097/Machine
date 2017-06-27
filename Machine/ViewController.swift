@@ -19,9 +19,7 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
     var previewLayer: AVCaptureVideoPreviewLayer!
     
     var captureQueue = DispatchQueue(label: "captureQueue")
-    
-    var gradientLayer = CAGradientLayer()
-    
+        
     var faceRect = NSView(frame: NSRect())
     
     var lowPower = true
@@ -62,8 +60,7 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
     override func viewDidLayout() {
         super.viewDidLayout()
         
-        previewLayer.frame  = self.cameraView.bounds;
-        gradientLayer.frame = self.cameraView.bounds;
+        previewLayer.frame  = self.cameraView.bounds
     }
     
     func prepareViews() {
