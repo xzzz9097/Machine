@@ -8,6 +8,7 @@
 
 import Cocoa
 import AVFoundation
+import Vision
 
 class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
     
@@ -18,7 +19,7 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
     var captureQueue = DispatchQueue(label: "captureQueue")
     
     var gradientLayer = CAGradientLayer()
-
+    
     @IBOutlet weak var cameraView: NSView!
     
     override func viewDidLoad() {
@@ -56,7 +57,8 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
             videoOutput.setSampleBufferDelegate(self, queue: captureQueue)
             videoOutput.alwaysDiscardsLateVideoFrames = true
             
-            videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA]
+            videoOutput.videoSettings =
+                [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA]
             session.sessionPreset = .high
             
             // wire up the session
@@ -70,8 +72,39 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
             // Start the session
             session.startRunning()
         } catch {
-            
+            fatalError(error.localizedDescription)
         }
+    }
+    
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+            return
+        }
+        
+        connection.videoOrientation = .portrait
+        
+        let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer,
+                                                        orientation: 1,
+                                                        options: [:])
+        
+        do {
+            try imageRequestHandler.perform([VNDetectFaceRectanglesRequest(completionHandler: handleRequestOutput)])
+        } catch {
+            print(error)
+        }
+    }
+    
+    func handleRequestOutput(request: VNRequest, error: Error?) {
+        if let error = error {
+            print("Error: \(error.localizedDescription)")
+        }
+        
+        guard let observations = request.results else {
+            print("No results")
+            return
+        }
+        
+        print(observations)
     }
 
     override var representedObject: Any? {
