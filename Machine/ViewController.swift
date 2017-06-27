@@ -20,7 +20,15 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     var captureQueue = DispatchQueue(label: "captureQueue")
         
-    var faceRect = NSView(frame: NSRect())
+    var faceRects: [FaceRect] = [ ] {
+        didSet {
+            cameraView.subviews = [ ]
+            
+            for rect in faceRects {
+                cameraView.addSubview(rect)
+            }
+        }
+    }
     
     var lowPower = true
     
@@ -65,12 +73,6 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     func prepareViews() {
         cameraView.wantsLayer = true
-        faceRect.wantsLayer   = true
-        
-        faceRect.layer?.borderColor = NSColor.yellow.cgColor
-        faceRect.layer?.borderWidth = 1
-        
-        cameraView.addSubview(faceRect)
     }
     
     func loadCaptureSession() {
@@ -157,15 +159,31 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
             .flatMap({$0 as? VNFaceObservation})
             .map({$0.boundingBox})
         
+        let delta = results.count - faceRects.count
+        
+        if delta > 0 {
+            for _ in 0..<delta {
+                DispatchQueue.main.async {
+                    self.faceRects.append(FaceRect(frame: NSRect()))
+                }
+            }
+        } else if delta < 0 {
+            for _ in 0..<abs(delta) {
+                DispatchQueue.main.async {
+                    if !self.faceRects.isEmpty { self.faceRects.removeLast() }
+                }
+            }
+        }
+        
         guard !results.isEmpty else {
             resetFaceRectagle()
             
             return
         }
         
-        for result in results {
+        for (result, faceRect) in zip(results, faceRects) {
             DispatchQueue.main.async {
-                self.faceRect.animator().frame = result.scaled(
+                faceRect.animator().frame = result.scaled(
                     width: self.cameraView.bounds.width,
                     height: self.cameraView.bounds.height
                 )
@@ -174,8 +192,10 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
     }
     
     func resetFaceRectagle() {
-        DispatchQueue.main.async {
-            self.faceRect.frame = NSRect()
+        for faceRect in faceRects {
+            DispatchQueue.main.async {
+                faceRect.frame = NSRect()
+            }
         }
     }
 
@@ -194,5 +214,21 @@ extension CGRect {
                       width: self.width * width,
                       height: self.height * height)
     }
+}
+
+class FaceRect: NSView {
+    
+    override init(frame: NSRect) {
+        super.init(frame: frame)
+        
+        self.wantsLayer   = true
+        self.layer?.borderColor = NSColor.yellow.cgColor
+        self.layer?.borderWidth = 1
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
 }
 
