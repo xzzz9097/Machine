@@ -28,7 +28,7 @@
                                                 <action selector="trackingMenuItemClicked:" target="Ady-hI-5gd" id="Ei9-fO-8OI"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Low power" id="Aio-WK-vAa">
+                                        <menuItem title="Low power" state="on" id="Aio-WK-vAa">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="lowPowerMenuItemClicked:" target="Ady-hI-5gd" id="UrO-hq-5D9"/>

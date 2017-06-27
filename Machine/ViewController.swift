@@ -24,7 +24,7 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     var faceRect = NSView(frame: NSRect())
     
-    var lowPower = false
+    var lowPower = true
     
     var shouldTrack = true
     
