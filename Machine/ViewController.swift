@@ -85,7 +85,7 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
                        from connection: AVCaptureConnection) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             return
-        }        
+        }
         
         let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer,
                                                         orientation: 1,
@@ -110,7 +110,10 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
             return
         }
         
-        print(observations)
+        let results = observations
+            .flatMap({$0 as? VNFaceObservation})
+        
+        print(results)
     }
 
     override var representedObject: Any? {
