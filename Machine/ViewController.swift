@@ -221,13 +221,24 @@ class FaceRect: NSView {
     override init(frame: NSRect) {
         super.init(frame: frame)
         
-        self.wantsLayer   = true
-        self.layer?.borderColor = NSColor.yellow.cgColor
+        self.wantsLayer         = true
+        self.layer?.borderColor = NSColor.random.cgColor
         self.layer?.borderWidth = 1
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    
+}
+
+extension NSColor {
+    
+    static var random: NSColor {
+        return NSColor(red: CGFloat(drand48()),
+                       green: CGFloat(drand48()),
+                       blue: CGFloat(drand48()),
+                       alpha: 1)
     }
     
 }
