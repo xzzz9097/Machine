@@ -76,7 +76,9 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
         }
     }
     
-    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+    func captureOutput(_ output: AVCaptureOutput,
+                       didOutput sampleBuffer: CMSampleBuffer,
+                       from connection: AVCaptureConnection) {
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             return
         }
@@ -88,7 +90,9 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
                                                         options: [:])
         
         do {
-            try imageRequestHandler.perform([VNDetectFaceRectanglesRequest(completionHandler: handleRequestOutput)])
+            try imageRequestHandler.perform(
+                [VNDetectFaceRectanglesRequest(completionHandler: handleRequestOutput)]
+            )
         } catch {
             print(error)
         }
