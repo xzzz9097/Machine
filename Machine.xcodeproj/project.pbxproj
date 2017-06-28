@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C9A215B1F03E16F00861B50 /* EmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A215A1F03E16F00861B50 /* EmojiView.swift */; };
+		0C9A215D1F03E2A100861B50 /* NSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A215C1F03E2A100861B50 /* NSView.swift */; };
+		0C9A21601F03E35F00861B50 /* NSTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A215F1F03E35F00861B50 /* NSTextField.swift */; };
 		0CB13FF11F01B3AC00D3F18A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB13FF01F01B3AC00D3F18A /* AppDelegate.swift */; };
 		0CB13FF31F01B3AC00D3F18A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CB13FF21F01B3AC00D3F18A /* ViewController.swift */; };
 		0CB13FF51F01B3AC00D3F18A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0CB13FF41F01B3AC00D3F18A /* Assets.xcassets */; };
@@ -14,6 +17,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0C9A215A1F03E16F00861B50 /* EmojiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiView.swift; sourceTree = "<group>"; };
+		0C9A215C1F03E2A100861B50 /* NSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSView.swift; sourceTree = "<group>"; };
+		0C9A215F1F03E35F00861B50 /* NSTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSTextField.swift; sourceTree = "<group>"; };
 		0CB13FED1F01B3AC00D3F18A /* Machine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Machine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CB13FF01F01B3AC00D3F18A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0CB13FF21F01B3AC00D3F18A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -34,6 +40,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C9A215E1F03E2AB00861B50 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				0C9A215F1F03E35F00861B50 /* NSTextField.swift */,
+				0C9A215C1F03E2A100861B50 /* NSView.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		0CB13FE41F01B3AC00D3F18A = {
 			isa = PBXGroup;
 			children = (
@@ -55,6 +70,8 @@
 			children = (
 				0CB13FF01F01B3AC00D3F18A /* AppDelegate.swift */,
 				0CB13FF21F01B3AC00D3F18A /* ViewController.swift */,
+				0C9A215A1F03E16F00861B50 /* EmojiView.swift */,
+				0C9A215E1F03E2AB00861B50 /* Extensions */,
 				0CB13FF41F01B3AC00D3F18A /* Assets.xcassets */,
 				0CB13FF61F01B3AC00D3F18A /* Main.storyboard */,
 				0CB13FF91F01B3AC00D3F18A /* Info.plist */,
@@ -135,6 +152,9 @@
 			files = (
 				0CB13FF31F01B3AC00D3F18A /* ViewController.swift in Sources */,
 				0CB13FF11F01B3AC00D3F18A /* AppDelegate.swift in Sources */,
+				0C9A215B1F03E16F00861B50 /* EmojiView.swift in Sources */,
+				0C9A21601F03E35F00861B50 /* NSTextField.swift in Sources */,
+				0C9A215D1F03E2A100861B50 /* NSView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -243,7 +243,7 @@ class FaceRect: NSView {
         }
     }
     
-    var emojiView: NSTextField!
+    var emojiView: EmojiView!
     
     override init(frame: NSRect) {
         super.init(frame: frame)
@@ -257,7 +257,7 @@ class FaceRect: NSView {
         self.init(frame: frame)
         
         if hiddenFace {
-            emojiView = createEmojiView()
+            emojiView = EmojiView(frame: NSRect())
             
             self.addSubview(emojiView)
         }
@@ -275,22 +275,8 @@ class FaceRect: NSView {
         self.animator().frame = frame
         
         if hiddenFace {
-            emojiView.setFrameSize(NSMakeSize(frame.width,
-                                              frame.height))
-            emojiView.font = NSFont.systemFont(ofSize: min(frame.width, frame.height) * 0.8)
+            emojiView.update(for: frame, textScale: 0.8)
         }
-    }
-    
-    func createEmojiView() -> NSTextField {
-        let emojiView = NSTextField(frame: NSRect())
-        
-        emojiView.stringValue     = "😀"
-        emojiView.isEditable      = false
-        emojiView.drawsBackground = false
-        emojiView.isBezeled       = false
-        emojiView.alignment       = .center
-        
-        return emojiView
     }
     
 }
