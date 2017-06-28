@@ -34,6 +34,11 @@
                                                 <action selector="lowPowerMenuItemClicked:" target="Ady-hI-5gd" id="UrO-hq-5D9"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Hide faces (emojis)" keyEquivalent="e" id="hSN-W1-cVs">
+                                            <connections>
+                                                <action selector="hideFacesMenuItemClicked:" target="Ady-hI-5gd" id="8QA-Gm-Fov"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
                                         <menuItem title="Services" id="NMo-om-nkz">
                                             <modifierMask key="keyEquivalentModifierMask"/>

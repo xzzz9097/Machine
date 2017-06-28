@@ -59,6 +59,16 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
         }
     }
     
+    @IBAction func hideFacesMenuItemClicked(_ sender: Any) {
+        hideFace = !hideFace
+        
+        faceRects = [ ]
+        
+        if let sender = sender as? NSMenuItem {
+            sender.state = hideFace ? .on : .off
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
