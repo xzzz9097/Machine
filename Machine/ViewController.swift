@@ -19,6 +19,8 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
     var previewLayer: AVCaptureVideoPreviewLayer!
     
     var captureQueue = DispatchQueue(label: "captureQueue")
+    
+    var hideFace = false
         
     var faceRects: [FaceRect] = [ ] {
         didSet {
@@ -165,7 +167,8 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
         if delta > 0 {
             for _ in 0..<delta {
                 DispatchQueue.main.async {
-                    self.faceRects.append(FaceRect(frame: NSRect()))
+                    self.faceRects.append(FaceRect(frame: NSRect(),
+                                                   hiddenFace: self.hideFace))
                 }
             }
         } else if delta < 0 {
@@ -188,9 +191,10 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
         
         for (result, faceRect) in zip(results, faceRects) {
             DispatchQueue.main.async {
-                faceRect.animator().frame = result.scaled(
-                    width: self.cameraView.bounds.width,
-                    height: self.cameraView.bounds.height
+                faceRect.updateFrame(to: result.scaled(
+                        width: self.cameraView.bounds.width,
+                        height: self.cameraView.bounds.height
+                    )
                 )
             }
         }
@@ -199,7 +203,7 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
     func resetFaceRectagle() {
         for faceRect in faceRects {
             DispatchQueue.main.async {
-                faceRect.frame = NSRect()
+                faceRect.updateFrame(to: NSRect())
             }
         }
     }
@@ -223,6 +227,14 @@ extension CGRect {
 
 class FaceRect: NSView {
     
+    var hiddenFace = false {
+        didSet {
+            self.layer?.borderWidth = hiddenFace ? 0 : 1
+        }
+    }
+    
+    var emojiView: NSTextField!
+    
     override init(frame: NSRect) {
         super.init(frame: frame)
         
@@ -231,8 +243,44 @@ class FaceRect: NSView {
         self.layer?.borderWidth = 1
     }
     
+    convenience init(frame: NSRect, hiddenFace: Bool = false) {
+        self.init(frame: frame)
+        
+        if hiddenFace {
+            emojiView = createEmojiView()
+            
+            self.addSubview(emojiView)
+        }
+        
+        defer {
+            self.hiddenFace = hiddenFace
+        }
+    }
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    
+    func updateFrame(to frame: NSRect) {
+        self.animator().frame = frame
+        
+        if hiddenFace {
+            emojiView.setFrameSize(NSMakeSize(frame.width,
+                                              frame.height))
+            emojiView.font = NSFont.systemFont(ofSize: min(frame.width, frame.height) * 0.95)
+        }
+    }
+    
+    func createEmojiView() -> NSTextField {
+        let emojiView = NSTextField(frame: NSRect())
+        
+        emojiView.stringValue     = "😀"
+        emojiView.isEditable      = false
+        emojiView.drawsBackground = false
+        emojiView.isBezeled       = false
+        emojiView.alignment       = .center
+        
+        return emojiView
     }
     
 }
