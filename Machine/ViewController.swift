@@ -22,12 +22,12 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     var hideFace = false
         
-    var faceRects: [FaceRect] = [ ] {
+    var faceViews: [FaceView] = [ ] {
         didSet {
             cameraView.subviews = [ ]
             
-            for rect in faceRects {
-                cameraView.addSubview(rect)
+            for view in faceViews {
+                cameraView.addSubview(view)
             }
         }
     }
@@ -62,7 +62,7 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
     @IBAction func hideFacesMenuItemClicked(_ sender: Any) {
         hideFace = !hideFace
         
-        faceRects = [ ]
+        faceViews = [ ]
         
         if let sender = sender as? NSMenuItem {
             sender.state = hideFace ? .on : .off
@@ -139,7 +139,7 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
                        from connection: AVCaptureConnection) {
         guard   shouldTrack,
                 let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
-            resetFaceRectagle()
+            resetFaceViews()
                     
             return
         }
@@ -172,36 +172,36 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
             .map { $0.boundingBox }
             .sorted { $0.minX < $1.minX }
         
-        let delta = results.count - faceRects.count
+        let delta = results.count - faceViews.count
         
         if delta > 0 {
             for _ in 0..<delta {
                 DispatchQueue.main.async {
-                    self.faceRects.append(FaceRect(frame: NSRect(),
+                    self.faceViews.append(FaceView(frame: NSRect(),
                                                    hiddenFace: self.hideFace))
                 }
             }
         } else if delta < 0 {
             for _ in 0..<abs(delta) {
                 DispatchQueue.main.async {
-                    if !self.faceRects.isEmpty { self.faceRects.removeLast() }
+                    if !self.faceViews.isEmpty { self.faceViews.removeLast() }
                 }
             }
         }
         
         DispatchQueue.main.async {
-            self.faceRects = self.faceRects.sorted { $0.frame.minX < $1.frame.minX }
+            self.faceViews = self.faceViews.sorted { $0.frame.minX < $1.frame.minX }
         }
         
         guard !results.isEmpty else {
-            resetFaceRectagle()
+            resetFaceViews()
             
             return
         }
         
-        for (result, faceRect) in zip(results, faceRects) {
+        for (result, view) in zip(results, faceViews) {
             DispatchQueue.main.async {
-                faceRect.updateFrame(to: result.scaled(
+                view.updateFrame(to: result.scaled(
                         width: self.cameraView.bounds.width,
                         height: self.cameraView.bounds.height
                     )
@@ -210,10 +210,10 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
         }
     }
     
-    func resetFaceRectagle() {
-        for faceRect in faceRects {
+    func resetFaceViews() {
+        for view in faceViews {
             DispatchQueue.main.async {
-                faceRect.updateFrame(to: NSRect())
+                view.updateFrame(to: NSRect())
             }
         }
     }
@@ -224,50 +224,4 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
         }
     }
 
-}
-
-class FaceRect: NSView {
-    
-    var hiddenFace = false {
-        didSet {
-            self.layer?.borderWidth = hiddenFace ? 0 : 1
-        }
-    }
-    
-    var emojiView: EmojiView!
-    
-    override init(frame: NSRect) {
-        super.init(frame: frame)
-        
-        self.wantsLayer         = true
-        self.layer?.borderColor = NSColor.random.cgColor
-        self.layer?.borderWidth = 1
-    }
-    
-    convenience init(frame: NSRect, hiddenFace: Bool = false) {
-        self.init(frame: frame)
-        
-        if hiddenFace {
-            emojiView = EmojiView(frame: NSRect())
-            
-            self.addSubview(emojiView)
-        }
-        
-        defer {
-            self.hiddenFace = hiddenFace
-        }
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-    
-    func updateFrame(to frame: NSRect) {
-        self.animator().frame = frame
-        
-        if hiddenFace {
-            emojiView.update(for: frame, textScale: 0.8)
-        }
-    }
-    
 }
