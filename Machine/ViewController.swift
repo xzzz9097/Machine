@@ -277,7 +277,7 @@ class FaceRect: NSView {
         if hiddenFace {
             emojiView.setFrameSize(NSMakeSize(frame.width,
                                               frame.height))
-            emojiView.font = NSFont.systemFont(ofSize: min(frame.width, frame.height) * 0.95)
+            emojiView.font = NSFont.systemFont(ofSize: min(frame.width, frame.height) * 0.8)
         }
     }
     
