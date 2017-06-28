@@ -226,15 +226,6 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
 
 }
 
-extension CGRect {
-    func scaled(width: CGFloat, height: CGFloat) -> CGRect {
-        return CGRect(x: self.minX * width,
-                      y: self.minY * height,
-                      width: self.width * width,
-                      height: self.height * height)
-    }
-}
-
 class FaceRect: NSView {
     
     var hiddenFace = false {
@@ -280,15 +271,3 @@ class FaceRect: NSView {
     }
     
 }
-
-extension NSColor {
-    
-    static var random: NSColor {
-        return NSColor(red: CGFloat(drand48()),
-                       green: CGFloat(drand48()),
-                       blue: CGFloat(drand48()),
-                       alpha: 1)
-    }
-    
-}
-
