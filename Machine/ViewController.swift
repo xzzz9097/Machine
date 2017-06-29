@@ -12,7 +12,7 @@ import Vision
 
 class ViewController: NSViewController {
     
-    var requestDelegate = ImageRequestCaptureDelegate.default
+    var requestDelegate = VisionRequestCaptureDelegate.default
     
     var captureSession = CaptureSession()
     

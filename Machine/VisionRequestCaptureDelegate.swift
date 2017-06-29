@@ -13,7 +13,7 @@ import Vision
 typealias VNRequestFailHandler   = () -> ()
 typealias VNRequestSuccesHandler = (VNRequest, Error?) -> ()
 
-class ImageRequestCaptureDelegate:  NSObject,
+class VisionRequestCaptureDelegate: NSObject,
                                     AVCaptureVideoDataOutputSampleBufferDelegate {
     
     var request: VNRequest?
@@ -26,7 +26,7 @@ class ImageRequestCaptureDelegate:  NSObject,
         return request?.completionHandler
     }
     
-    static let `default` = ImageRequestCaptureDelegate()
+    static let `default` = VisionRequestCaptureDelegate()
     
     private override init() { }
     
