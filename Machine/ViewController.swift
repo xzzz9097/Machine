@@ -17,7 +17,7 @@ class ViewController: NSViewController {
     var captureSession = CaptureSession()
     
     var hideFace = false
-        
+    
     var faceViews: [FaceView] = [ ] {
         didSet {
             cameraView.subviews = [ ]
@@ -66,6 +66,14 @@ class ViewController: NSViewController {
         loadCaptureSession()
     }
     
+    func prepareWindow() {
+        guard let window = self.view.window else { return }
+        
+        window.titlebarAppearsTransparent = true
+        window.titleVisibility = .hidden
+        window.styleMask.insert(.fullSizeContentView)
+    }
+    
     func loadCaptureSession() {
         requestDelegate.configure(
             for: VNDetectFaceRectanglesRequest(completionHandler: handleRequestOutput),
@@ -83,6 +91,8 @@ class ViewController: NSViewController {
         super.viewDidLayout()
         
         captureSession.previewLayer.frame = self.cameraView.bounds
+        
+        prepareWindow()
     }
     
     func prepareViews() {
@@ -134,8 +144,8 @@ class ViewController: NSViewController {
         for (result, view) in zip(results, faceViews) {
             DispatchQueue.main.async {
                 view.updateFrame(to: result.scaled(
-                        width: self.cameraView.bounds.width,
-                        height: self.cameraView.bounds.height
+                    width: self.cameraView.bounds.width,
+                    height: self.cameraView.bounds.height
                     )
                 )
             }
@@ -149,11 +159,12 @@ class ViewController: NSViewController {
             }
         }
     }
-
+    
     override var representedObject: Any? {
         didSet {
-        // Update the view, if already loaded.
+            // Update the view, if already loaded.
         }
     }
-
+    
 }
+
