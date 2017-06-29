@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C26FE431F0526B400E56DD8 /* ImageRequestCaptureDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C26FE421F0526B400E56DD8 /* ImageRequestCaptureDelegate.swift */; };
 		0C9A215B1F03E16F00861B50 /* EmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A215A1F03E16F00861B50 /* EmojiView.swift */; };
 		0C9A215D1F03E2A100861B50 /* NSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A215C1F03E2A100861B50 /* NSView.swift */; };
 		0C9A21601F03E35F00861B50 /* NSTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A215F1F03E35F00861B50 /* NSTextField.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0C26FE421F0526B400E56DD8 /* ImageRequestCaptureDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRequestCaptureDelegate.swift; sourceTree = "<group>"; };
 		0C9A215A1F03E16F00861B50 /* EmojiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiView.swift; sourceTree = "<group>"; };
 		0C9A215C1F03E2A100861B50 /* NSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSView.swift; sourceTree = "<group>"; };
 		0C9A215F1F03E35F00861B50 /* NSTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSTextField.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 			children = (
 				0CB13FF01F01B3AC00D3F18A /* AppDelegate.swift */,
 				0CB13FF21F01B3AC00D3F18A /* ViewController.swift */,
+				0C26FE421F0526B400E56DD8 /* ImageRequestCaptureDelegate.swift */,
 				0C9A215A1F03E16F00861B50 /* EmojiView.swift */,
 				0C9A21691F04300B00861B50 /* CaptureSession.swift */,
 				0C9A216E1F0432C900861B50 /* CaptureFrameDuration.swift */,
@@ -171,6 +174,7 @@
 				0C9A215B1F03E16F00861B50 /* EmojiView.swift in Sources */,
 				0C9A21661F03E61B00861B50 /* FaceView.swift in Sources */,
 				0C9A21601F03E35F00861B50 /* NSTextField.swift in Sources */,
+				0C26FE431F0526B400E56DD8 /* ImageRequestCaptureDelegate.swift in Sources */,
 				0C9A21621F03E55D00861B50 /* NSColor.swift in Sources */,
 				0C9A215D1F03E2A100861B50 /* NSView.swift in Sources */,
 				0C9A21641F03E59400861B50 /* CGRect.swift in Sources */,

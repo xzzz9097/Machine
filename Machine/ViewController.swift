@@ -10,7 +10,9 @@ import Cocoa
 import AVFoundation
 import Vision
 
-class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
+class ViewController: NSViewController {
+    
+    var requestDelegate = ImageRequestCaptureDelegate.default
     
     var captureSession = CaptureSession()
     
@@ -26,15 +28,13 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
         }
     }
     
-    var shouldTrack = true
-    
     @IBOutlet weak var cameraView: NSView!
     
     @IBAction func trackingMenuItemClicked(_ sender: Any) {
-        shouldTrack = !shouldTrack
+        requestDelegate.shouldTrack = !requestDelegate.shouldTrack
         
         if let sender = sender as? NSMenuItem {
-            sender.state = shouldTrack ? .on : .off
+            sender.state = requestDelegate.shouldTrack ? .on : .off
         }
     }
     
@@ -67,7 +67,12 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
     }
     
     func loadCaptureSession() {
-        captureSession.delegate = self
+        requestDelegate.configure(
+            for: VNDetectFaceRectanglesRequest(completionHandler: handleRequestOutput),
+            failHandler: { self.resetFaceViews() }
+        )
+        
+        captureSession.delegate = requestDelegate
         
         cameraView.layer?.addSublayer(captureSession.previewLayer)
         
@@ -82,29 +87,6 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     func prepareViews() {
         cameraView.wantsLayer = true
-    }
-    
-    func captureOutput(_ output: AVCaptureOutput,
-                       didOutput sampleBuffer: CMSampleBuffer,
-                       from connection: AVCaptureConnection) {
-        guard   shouldTrack,
-                let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
-            resetFaceViews()
-                    
-            return
-        }
-        
-        let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer,
-                                                        orientation: 1,
-                                                        options: [:])
-        
-        do {
-            try imageRequestHandler.perform(
-                [VNDetectFaceRectanglesRequest(completionHandler: handleRequestOutput)]
-            )
-        } catch {
-            print(error)
-        }
     }
     
     func handleRequestOutput(request: VNRequest, error: Error?) {
