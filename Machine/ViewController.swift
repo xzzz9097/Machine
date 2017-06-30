@@ -20,7 +20,9 @@ class ViewController: NSViewController {
     
     var faceViews: [FaceView] = [ ] {
         didSet {
-            cameraView.subviews = [ ]
+            cameraView.subviews = cameraView.subviews.filter {
+                !($0 is FaceView)
+            }
             
             for view in faceViews {
                 cameraView.addSubview(view)
@@ -29,6 +31,8 @@ class ViewController: NSViewController {
     }
     
     @IBOutlet weak var cameraView: NSView!
+    
+    @IBOutlet weak var statusView: NSTextField!
     
     @IBAction func trackingMenuItemClicked(_ sender: Any) {
         requestDelegate.shouldTrack = !requestDelegate.shouldTrack
@@ -97,6 +101,13 @@ class ViewController: NSViewController {
     
     func prepareViews() {
         cameraView.wantsLayer = true
+        
+        statusView.alignment = .center
+        
+        if let osdView = statusView.superview {
+            osdView.wantsLayer = true
+            osdView.layer?.cornerRadius = 5
+        }
     }
     
     func handleRequestOutput(request: VNRequest, error: Error?) {
@@ -115,6 +126,15 @@ class ViewController: NSViewController {
             .sorted { $0.minX < $1.minX }
         
         let delta = results.count - faceViews.count
+        
+        DispatchQueue.main.async {
+            switch results.count {
+            case 0:
+                self.statusView.stringValue = "No 🤔 detected..."
+            default:
+                self.statusView.stringValue = "\(results.count) 😀 detected!"
+            }
+        }
         
         if delta > 0 {
             for _ in 0..<delta {

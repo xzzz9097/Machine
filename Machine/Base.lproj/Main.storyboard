@@ -3,6 +3,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13122.19"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+        <capability name="system font weights other than Regular or Bold" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -111,6 +112,32 @@
                         <subviews>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="CE2-wn-Dza">
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                                <subviews>
+                                    <visualEffectView wantsLayer="YES" blendingMode="withinWindow" material="dark" state="followsWindowActiveState" translatesAutoresizingMaskIntoConstraints="NO" id="c6N-79-r74">
+                                        <rect key="frame" x="201" y="10" width="78" height="30"/>
+                                        <subviews>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Kmi-O9-4hP">
+                                                <rect key="frame" x="18" y="5" width="42" height="20"/>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Ready" placeholderString="" id="2Df-OG-imN">
+                                                    <font key="font" metaFont="systemLight" size="13"/>
+                                                    <color key="textColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </textFieldCell>
+                                            </textField>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="MDC-1f-PRm"/>
+                                            <constraint firstItem="Kmi-O9-4hP" firstAttribute="top" secondItem="c6N-79-r74" secondAttribute="top" constant="5" id="Pfw-oQ-NIC"/>
+                                            <constraint firstAttribute="trailing" secondItem="Kmi-O9-4hP" secondAttribute="trailing" constant="20" id="XGB-W1-l0R"/>
+                                            <constraint firstAttribute="bottom" secondItem="Kmi-O9-4hP" secondAttribute="bottom" constant="5" id="de2-ht-JOA"/>
+                                            <constraint firstItem="Kmi-O9-4hP" firstAttribute="leading" secondItem="c6N-79-r74" secondAttribute="leading" constant="20" id="obZ-wh-C0N"/>
+                                        </constraints>
+                                    </visualEffectView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="c6N-79-r74" firstAttribute="centerX" secondItem="CE2-wn-Dza" secondAttribute="centerX" id="1yj-FP-SWn"/>
+                                    <constraint firstAttribute="bottom" secondItem="c6N-79-r74" secondAttribute="bottom" constant="10" id="ZDk-SA-oHj"/>
+                                </constraints>
                             </customView>
                         </subviews>
                         <constraints>
@@ -122,6 +149,7 @@
                     </view>
                     <connections>
                         <outlet property="cameraView" destination="CE2-wn-Dza" id="tHC-yl-q7H"/>
+                        <outlet property="statusView" destination="Kmi-O9-4hP" id="RQ1-Mj-1UQ"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
