@@ -82,6 +82,7 @@ class ViewController: NSViewController,
         window.titlebarAppearsTransparent = true
         window.titleVisibility            = .hidden
         window.delegate                   = self
+        window.appearance                 = NSAppearance(named: .vibrantDark)
         window.styleMask.insert(.fullSizeContentView)
     }
     
@@ -97,7 +98,7 @@ class ViewController: NSViewController,
         
         captureSession.delegate = requestDelegate
         
-        cameraView.layer?.addSublayer(captureSession.previewLayer)        
+        cameraView.layer?.addSublayer(captureSession.previewLayer)
     }
     
     override func viewDidLayout() {
