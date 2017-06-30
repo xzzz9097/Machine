@@ -131,12 +131,14 @@ class ViewController: NSViewController {
         
         let delta = results.count - faceViews.count
         
-        DispatchQueue.main.async {
-            switch results.count {
-            case 0:
-                self.statusView.stringValue = "No 🤔 detected..."
-            default:
-                self.statusView.stringValue = "\(results.count) 😀 detected!"
+        if abs(delta) > 0 {
+            DispatchQueue.main.async {
+                switch results.count {
+                case 0:
+                    self.statusView.stringValue = "No 🤔 detected..."
+                default:
+                    self.statusView.stringValue = "\(results.count) 😀 detected!"
+                }
             }
         }
         
