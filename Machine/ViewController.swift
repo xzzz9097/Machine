@@ -25,7 +25,11 @@ class ViewController: NSViewController {
             }
             
             for view in faceViews {
-                cameraView.addSubview(view)
+                cameraView.addSubview(
+                    view,
+                    positioned: .below,
+                    relativeTo: cameraView.subviews.filter{ $0 is FaceView }.first
+                )
             }
         }
     }
