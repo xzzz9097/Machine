@@ -11,7 +11,8 @@ import AVFoundation
 import Vision
 
 class ViewController: NSViewController,
-                      VisionDetectedObjectHandlerDelegate {
+                      VisionDetectedObjectHandlerDelegate,
+                      NSWindowDelegate {
     
     var requestDelegate = VisionRequestCaptureDelegate.default
     
@@ -79,7 +80,8 @@ class ViewController: NSViewController,
         guard let window = self.view.window else { return }
         
         window.titlebarAppearsTransparent = true
-        window.titleVisibility = .hidden
+        window.titleVisibility            = .hidden
+        window.delegate                   = self
         window.styleMask.insert(.fullSizeContentView)
     }
     
@@ -95,9 +97,7 @@ class ViewController: NSViewController,
         
         captureSession.delegate = requestDelegate
         
-        cameraView.layer?.addSublayer(captureSession.previewLayer)
-        
-        captureSession.start()
+        cameraView.layer?.addSublayer(captureSession.previewLayer)        
     }
     
     override func viewDidLayout() {
@@ -175,6 +175,18 @@ class ViewController: NSViewController,
                     )
                 )
             }
+        }
+    }
+    
+    // MARK: NSWindowDelegate
+    
+    func windowDidChangeOcclusionState(_ notification: Notification) {
+        guard let window = notification.object as? NSWindow else { return }
+        
+        if window.occlusionState.contains(.visible) {
+            captureSession.start()
+        } else {
+            captureSession.stop()
         }
     }
     
