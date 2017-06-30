@@ -19,7 +19,7 @@ extension VisionDetectedObjectHandlerDelegate {
     
     func didReceiveResults(_ results: [Any]) {
         let boxes = results
-            .flatMap { $0 as? VNFaceObservation }
+            .flatMap { $0 as? VNDetectedObjectObservation }
             .map { $0.boundingBox }
             .sorted { $0.minX < $1.minX }
         
