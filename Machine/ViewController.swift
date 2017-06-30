@@ -10,7 +10,8 @@ import Cocoa
 import AVFoundation
 import Vision
 
-class ViewController: NSViewController {
+class ViewController: NSViewController,
+                      VisionDetectedObjectHandlerDelegate {
     
     var requestDelegate = VisionRequestCaptureDelegate.default
     
@@ -83,8 +84,12 @@ class ViewController: NSViewController {
     }
     
     func loadCaptureSession() {
+        let detectedObjectHandler = VisionRequestResultHandler(delegate: self)
+        
         requestDelegate.configure(
-            for: VNDetectFaceRectanglesRequest(completionHandler: handleRequestOutput),
+            for: VNDetectFaceRectanglesRequest(
+                completionHandler: detectedObjectHandler.requestResultHandler
+            ),
             failHandler: { self.resetFaceViews() }
         )
         
@@ -114,30 +119,26 @@ class ViewController: NSViewController {
         }
     }
     
-    func handleRequestOutput(request: VNRequest, error: Error?) {
-        if let error = error {
-            print("Error: \(error.localizedDescription)")
+    func resetFaceViews() {
+        for view in faceViews {
+            DispatchQueue.main.async {
+                view.updateFrame(to: NSRect())
+            }
         }
-        
-        guard let observations = request.results else {
-            print("No results")
-            return
-        }
-        
-        let results = observations
-            .flatMap { $0 as? VNFaceObservation }
-            .map { $0.boundingBox }
-            .sorted { $0.minX < $1.minX }
-        
-        let delta = results.count - faceViews.count
+    }
+    
+    // MARK: VisionDetectedObjectHandlerDelegate
+    
+    func didReceiveBoundingBoxes(_ boxes: [NSRect]) {
+        let delta = boxes.count - faceViews.count
         
         if abs(delta) > 0 {
             DispatchQueue.main.async {
-                switch results.count {
+                switch boxes.count {
                 case 0:
                     self.statusView.stringValue = "No 🤔 detected..."
                 default:
-                    self.statusView.stringValue = "\(results.count) 😀 detected!"
+                    self.statusView.stringValue = "\(boxes.count) 😀 detected!"
                 }
             }
         }
@@ -161,35 +162,19 @@ class ViewController: NSViewController {
             self.faceViews = self.faceViews.sorted { $0.frame.minX < $1.frame.minX }
         }
         
-        guard !results.isEmpty else {
-            resetFaceViews()
-            
-            return
-        }
-        
-        for (result, view) in zip(results, faceViews) {
+        for (box, view) in zip(boxes, faceViews) {
             DispatchQueue.main.async {
-                view.updateFrame(to: result.scaled(
-                    width: self.cameraView.bounds.width,
-                    height: self.cameraView.bounds.height
+                view.updateFrame(to: box.scaled(
+                        width: self.cameraView.bounds.width,
+                        height: self.cameraView.bounds.height
                     )
                 )
             }
         }
     }
     
-    func resetFaceViews() {
-        for view in faceViews {
-            DispatchQueue.main.async {
-                view.updateFrame(to: NSRect())
-            }
-        }
-    }
-    
-    override var representedObject: Any? {
-        didSet {
-            // Update the view, if already loaded.
-        }
+    func didReceiveEmptyResults() {
+        resetFaceViews()
     }
     
 }
