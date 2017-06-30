@@ -18,8 +18,6 @@ protocol VisionRequestResultHandlerDelegate: class {
     
     func didReceiveResults(_ results: [Any])
     
-    func didReceiveEmptyResults()
-    
 }
 
 extension VisionRequestResultHandlerProtocol {
@@ -37,11 +35,7 @@ extension VisionRequestResultHandlerProtocol {
                 return
             }
             
-            if observations.isEmpty {
-                self.delegate?.didReceiveEmptyResults()
-            } else {
-                self.delegate?.didReceiveResults(observations)
-            }
+            self.delegate?.didReceiveResults(observations)
         }
     }
     

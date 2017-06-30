@@ -158,6 +158,11 @@ class ViewController: NSViewController,
             }
         }
         
+        if boxes.isEmpty {
+            resetFaceViews()
+            return
+        }
+        
         DispatchQueue.main.async {
             self.faceViews = self.faceViews.sorted { $0.frame.minX < $1.frame.minX }
         }
@@ -171,10 +176,6 @@ class ViewController: NSViewController,
                 )
             }
         }
-    }
-    
-    func didReceiveEmptyResults() {
-        resetFaceViews()
     }
     
 }
