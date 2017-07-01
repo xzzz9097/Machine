@@ -40,6 +40,8 @@ class ViewController: NSViewController,
     
     @IBOutlet weak var statusView: NSTextField!
     
+    @IBOutlet weak var eyeView: NSImageView!
+    
     @IBAction func trackingMenuItemClicked(_ sender: Any) {
         requestDelegate.shouldTrack = !requestDelegate.shouldTrack
         
@@ -128,6 +130,20 @@ class ViewController: NSViewController,
         }
     }
     
+    var isCaptureSessionRunning: Bool = false {
+        didSet {
+            if isCaptureSessionRunning {
+                captureSession.start()
+                eyeView.isHidden = true
+            } else {
+                captureSession.stop()
+                eyeView.isHidden       = false
+                statusView.stringValue = "You're (not) being watched"
+                faceViews              = [ ]
+            }
+        }
+    }
+    
     // MARK: VisionDetectedObjectHandlerDelegate
     
     func didReceiveBoundingBoxes(_ boxes: [NSRect]) {
@@ -185,9 +201,9 @@ class ViewController: NSViewController,
         guard let window = notification.object as? NSWindow else { return }
         
         if window.occlusionState.contains(.visible) {
-            captureSession.start()
+            isCaptureSessionRunning = true
         } else {
-            captureSession.stop()
+            isCaptureSessionRunning = false
         }
     }
     

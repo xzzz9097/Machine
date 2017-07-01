@@ -133,6 +133,11 @@
                                             <constraint firstItem="Kmi-O9-4hP" firstAttribute="leading" secondItem="c6N-79-r74" secondAttribute="leading" constant="20" id="obZ-wh-C0N"/>
                                         </constraints>
                                     </visualEffectView>
+                                    <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uXX-AZ-IBV">
+                                        <rect key="frame" x="149" y="106" width="183" height="112"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="Eye" id="opK-QW-xfk"/>
+                                    </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="c6N-79-r74" firstAttribute="centerX" secondItem="CE2-wn-Dza" secondAttribute="centerX" id="1yj-FP-SWn"/>
@@ -149,6 +154,7 @@
                     </view>
                     <connections>
                         <outlet property="cameraView" destination="CE2-wn-Dza" id="tHC-yl-q7H"/>
+                        <outlet property="eyeView" destination="uXX-AZ-IBV" id="Joo-CZ-RwE"/>
                         <outlet property="statusView" destination="Kmi-O9-4hP" id="RQ1-Mj-1UQ"/>
                     </connections>
                 </viewController>
@@ -157,4 +163,7 @@
             <point key="canvasLocation" x="75" y="655"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Eye" width="587" height="326"/>
+    </resources>
 </document>
