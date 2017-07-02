@@ -39,6 +39,12 @@ class ViewController: NSViewController,
         }
     }
     
+    var status = Status() {
+        didSet {
+            statusView.stringValue = status.stringValue
+        }
+    }
+    
     @IBOutlet weak var cameraView: NSView!
     
     @IBOutlet weak var statusView: NSTextField!
@@ -178,9 +184,9 @@ class ViewController: NSViewController,
             DispatchQueue.main.async {
                 switch boxes.count {
                 case 0:
-                    self.statusView.stringValue = "No 🤔 detected..."
+                    self.status.components[.faceDetection] = "No 🤔 detected..."
                 default:
-                    self.statusView.stringValue = "\(boxes.count) 😀 detected!"
+                    self.status.components[.faceDetection] = "\(boxes.count) 😀 detected!"
                 }
             }
         }
@@ -229,14 +235,14 @@ class ViewController: NSViewController,
         
         guard let first = classifications.first else {
             DispatchQueue.main.async {
-                self.statusView.stringValue = "Nothing 🤔 detected..."
+                self.status.components[.classificationObservation] = "Nothing 🤔 detected..."
             }
             
             return
         }
         
         DispatchQueue.main.async {
-            self.statusView.stringValue = String(describing: first)
+            self.status.components[.classificationObservation] = String(describing: first)
         }
     }
     
