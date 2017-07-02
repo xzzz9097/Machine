@@ -16,36 +16,32 @@ typealias VNRequestSuccesHandler = (VNRequest, Error?) -> ()
 class VisionRequestCaptureDelegate: NSObject,
                                     AVCaptureVideoDataOutputSampleBufferDelegate {
     
-    var request: VNRequest?
+    var requests: [VNRequest]?
     
     var shouldTrack = true
     
     private var failHandler: VNRequestFailHandler?
     
-    private var completionHandler: VNRequestSuccesHandler? {
-        return request?.completionHandler
-    }
-    
     static let `default` = VisionRequestCaptureDelegate()
     
     private override init() { }
     
-    init(request: VNRequest,
+    init(requests: [VNRequest],
          failHandler: @escaping VNRequestFailHandler) {
         super.init()
-        configure(for: request, failHandler: failHandler)
+        configure(for: requests, failHandler: failHandler)
     }
     
-    func configure(for request: VNRequest,
+    func configure(for requests: [VNRequest],
                    failHandler: @escaping VNRequestFailHandler) {
-        self.request        = request
+        self.requests       = requests
         self.failHandler    = failHandler
     }
     
     func captureOutput(_ output: AVCaptureOutput,
                        didOutput sampleBuffer: CMSampleBuffer,
                        from connection: AVCaptureConnection) {
-        guard   let request = request,
+        guard   let requests = requests,
                 let failHandler = failHandler else {
                 return
         }
@@ -61,7 +57,7 @@ class VisionRequestCaptureDelegate: NSObject,
                                                         options: [:])
         
         do {
-            try imageRequestHandler.perform([request])
+            try imageRequestHandler.perform(requests)
         } catch {
             print(error)
         }

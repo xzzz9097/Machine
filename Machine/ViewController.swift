@@ -16,8 +16,8 @@ class ViewController: NSViewController,
     
     var requestDelegate = VisionRequestCaptureDelegate.default
     
-    var resnetDelegate  = VisionRequestCaptureDelegate.default
-    
+    var visionRequests: [VNRequest] = [ ]
+        
     var captureSession = CaptureSession()
     
     var hideFace = false
@@ -91,35 +91,38 @@ class ViewController: NSViewController,
     }
     
     func loadCaptureSession() {
-        let detectedObjectHandler = VisionRequestResultHandler(delegate: self)
+        prepareFaceRequest()
+        prepareResnetRequest()
         
         requestDelegate.configure(
-            for: VNDetectFaceRectanglesRequest(
-                completionHandler: detectedObjectHandler.requestResultHandler
-            ),
+            for: visionRequests,
             failHandler: { self.resetFaceViews() }
         )
-        
-        prepareResnetModel()
         
         captureSession.delegate = requestDelegate
         
         cameraView.layer?.addSublayer(captureSession.previewLayer)
     }
     
-    func prepareResnetModel() {
+    func prepareFaceRequest() {
+        let detectedObjectHandler = VisionRequestResultHandler(delegate: self)
         
+        visionRequests.append(
+            VNDetectFaceRectanglesRequest(
+                completionHandler: detectedObjectHandler.requestResultHandler
+            )
+        )
+    }
+    
+    func prepareResnetRequest() {
         guard let resnet = try? VNCoreMLModel(for: Resnet50().model) else {
             fatalError("Failed to load ResNet model")
         }
         
-        resnetDelegate.configure(
-            for: VNCoreMLRequest(model: resnet,
-                                 completionHandler: didReceiveResnetResults),
-            failHandler: { print("Error") }
+        visionRequests.append(
+            VNCoreMLRequest(model: resnet,
+                            completionHandler: didReceiveResnetResults)
         )
-        
-        captureSession.delegate = resnetDelegate
     }
     
     override func viewDidLayout() {
