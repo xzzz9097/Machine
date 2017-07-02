@@ -11,14 +11,15 @@ import Vision
 extension VNRequestResultHandler
     where Request: VNDetectRectanglesRequest {
     
-    func didReceiveResults(_ results: [Any]) {
+    func didReceiveResults(tag: ObservationTag.RawValue, _ results: [Any]) {
         if let delegate = delegate as? VNDetectedObjectDelegate {
             let boxes = results
                 .flatMap { $0 as? VNDetectedObjectObservation }
                 .map { $0.boundingBox }
                 .sorted { $0.minX < $1.minX }
             
-            delegate.didReceiveBoundingBoxes(boxes)
+            delegate.didReceiveBoundingBoxes(tag: tag,
+                                             boxes)
         }
     }
     
@@ -26,7 +27,8 @@ extension VNRequestResultHandler
 
 protocol VNDetectedObjectDelegate {
     
-    func didReceiveBoundingBoxes(_ boxes: [NSRect])
+    func didReceiveBoundingBoxes(tag: ObservationTag.RawValue,
+                                 _ boxes: [NSRect])
     
 }
 
@@ -35,8 +37,12 @@ class VNDetectedObjectHandler: VNRequestResultHandler {
     typealias Request = VNDetectRectanglesRequest
     
     var delegate: Any?
+    
+    var tag: ObservationTag.RawValue
         
-    init(delegate: VNDetectedObjectDelegate) {
+    init(tag: ObservationTag.RawValue,
+         delegate: VNDetectedObjectDelegate) {
+        self.tag      = tag
         self.delegate = delegate
     }
     

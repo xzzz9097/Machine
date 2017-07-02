@@ -10,6 +10,11 @@ import Cocoa
 import AVFoundation
 import Vision
 
+extension ObservationTag {
+    static let faceRequest                 = "faceRequest"
+    static let resnetClassificationRequest = "resnetClassificationRequest"
+}
+
 class ViewController: NSViewController,
                       VNDetectedObjectDelegate,
                       VNClassificationObservationDelegate,
@@ -112,7 +117,10 @@ class ViewController: NSViewController,
     }
     
     func prepareFaceRequest() {
-        let detectedObjectHandler = VNDetectedObjectHandler(delegate: self)
+        let detectedObjectHandler = VNDetectedObjectHandler(
+            tag: ObservationTag.faceRequest,
+            delegate: self
+        )
         
         visionRequests.append(
             VNDetectFaceRectanglesRequest(
@@ -126,7 +134,10 @@ class ViewController: NSViewController,
             fatalError("Failed to load ResNet model")
         }
         
-        let classificationObservationHandler = VNClassificationObservationHandler(delegate: self)
+        let classificationObservationHandler = VNClassificationObservationHandler(
+            tag: ObservationTag.resnetClassificationRequest,
+            delegate: self
+        )
         
         visionRequests.append(
             VNCoreMLRequest(model: resnet,
@@ -177,7 +188,8 @@ class ViewController: NSViewController,
     
     // MARK: VisionDetectedObjectHandlerDelegate
     
-    func didReceiveBoundingBoxes(_ boxes: [NSRect]) {
+    func didReceiveBoundingBoxes(tag: ObservationTag.RawValue,
+                                 _ boxes: [NSRect]) {
         let delta = boxes.count - faceViews.count
         
         if abs(delta) > 0 {
@@ -228,7 +240,8 @@ class ViewController: NSViewController,
     
     // MARK: VisionClassificationObservationHandlerDelegate
     
-    func didReceiveClassificationObservations(_ observations: [VNClassificationObservation]) {
+    func didReceiveClassificationObservations(tag: ObservationTag.RawValue,
+                                              _ observations: [VNClassificationObservation]) {
         let classifications = observations[0...4] // top 4 results
             .filter { $0.confidence > 0.3 }
             .map { "\($0.identifier) \(($0.confidence * 100.0).rounded())" }

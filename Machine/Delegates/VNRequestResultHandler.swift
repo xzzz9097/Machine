@@ -14,7 +14,9 @@ protocol VNRequestResultHandler {
     
     var delegate: Any? { get set }
     
-    func didReceiveResults(_ results: [Any])
+    var tag: ObservationTag.RawValue { get set }
+    
+    func didReceiveResults(tag: ObservationTag.RawValue, _ results: [Any])
     
 }
 
@@ -33,8 +35,9 @@ extension VNRequestResultHandler {
                 return
             }
             
-            self.didReceiveResults(observations)
+            self.didReceiveResults(tag: self.tag, observations)
         }
     }
     
 }
+
