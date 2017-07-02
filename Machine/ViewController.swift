@@ -184,9 +184,9 @@ class ViewController: NSViewController,
             DispatchQueue.main.async {
                 switch boxes.count {
                 case 0:
-                    self.status.components[.faceDetection] = "No 🤔 detected..."
+                    self.status.components[.faceDetection] = StatusComponent.faceDetection.defaultValue
                 default:
-                    self.status.components[.faceDetection] = "\(boxes.count) 😀 detected!"
+                    self.status.components[.faceDetection] = "\(boxes.count) 😀 detected"
                 }
             }
         }
@@ -235,7 +235,7 @@ class ViewController: NSViewController,
         
         guard let first = classifications.first else {
             DispatchQueue.main.async {
-                self.status.components[.classificationObservation] = "Nothing 🤔 detected..."
+                self.status.components[.classificationObservation] = StatusComponent.classificationObservation.defaultValue
             }
             
             return
