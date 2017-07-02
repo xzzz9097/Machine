@@ -11,6 +11,7 @@
 		0C050C361F0699E40091B8BA /* VisionDetectedObjectHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C050C351F0699E40091B8BA /* VisionDetectedObjectHandler.swift */; };
 		0C26FE431F0526B400E56DD8 /* VisionRequestCaptureDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C26FE421F0526B400E56DD8 /* VisionRequestCaptureDelegate.swift */; };
 		0C83D70C1F08E9E600D651FC /* Resnet50.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0C83D70B1F08E9E600D651FC /* Resnet50.mlmodel */; };
+		0C83D70E1F09084700D651FC /* VisionClassificationObservationHandlerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C83D70D1F09084700D651FC /* VisionClassificationObservationHandlerDelegate.swift */; };
 		0C9A215B1F03E16F00861B50 /* EmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A215A1F03E16F00861B50 /* EmojiView.swift */; };
 		0C9A215D1F03E2A100861B50 /* NSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A215C1F03E2A100861B50 /* NSView.swift */; };
 		0C9A21601F03E35F00861B50 /* NSTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A215F1F03E35F00861B50 /* NSTextField.swift */; };
@@ -30,6 +31,7 @@
 		0C050C351F0699E40091B8BA /* VisionDetectedObjectHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionDetectedObjectHandler.swift; sourceTree = "<group>"; };
 		0C26FE421F0526B400E56DD8 /* VisionRequestCaptureDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionRequestCaptureDelegate.swift; sourceTree = "<group>"; };
 		0C83D70B1F08E9E600D651FC /* Resnet50.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = Resnet50.mlmodel; path = ../../../Downloads/Resnet50.mlmodel; sourceTree = "<group>"; };
+		0C83D70D1F09084700D651FC /* VisionClassificationObservationHandlerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionClassificationObservationHandlerDelegate.swift; sourceTree = "<group>"; };
 		0C9A215A1F03E16F00861B50 /* EmojiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiView.swift; sourceTree = "<group>"; };
 		0C9A215C1F03E2A100861B50 /* NSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSView.swift; sourceTree = "<group>"; };
 		0C9A215F1F03E35F00861B50 /* NSTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSTextField.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 				0C050C321F0679B80091B8BA /* VisionRequestResultHandler.swift */,
 				0C83D70B1F08E9E600D651FC /* Resnet50.mlmodel */,
 				0C050C351F0699E40091B8BA /* VisionDetectedObjectHandler.swift */,
+				0C83D70D1F09084700D651FC /* VisionClassificationObservationHandlerDelegate.swift */,
 				0C9A21691F04300B00861B50 /* CaptureSession.swift */,
 				0C9A216E1F0432C900861B50 /* CaptureFrameDuration.swift */,
 				0C9A21651F03E61B00861B50 /* FaceView.swift */,
@@ -190,6 +193,7 @@
 				0C9A215D1F03E2A100861B50 /* NSView.swift in Sources */,
 				0C9A21641F03E59400861B50 /* CGRect.swift in Sources */,
 				0C050C331F0679B80091B8BA /* VisionRequestResultHandler.swift in Sources */,
+				0C83D70E1F09084700D651FC /* VisionClassificationObservationHandlerDelegate.swift in Sources */,
 				0C9A216A1F04300B00861B50 /* CaptureSession.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

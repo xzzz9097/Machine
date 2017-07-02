@@ -10,11 +10,9 @@ import Vision
 
 protocol VisionRequestResultHandlerProtocol {
     
-    var delegate: VisionRequestResultHandlerDelegate? { get set }
+    associatedtype Request
     
-}
-
-protocol VisionRequestResultHandlerDelegate: class {
+    var delegate: Any? { get set }
     
     func didReceiveResults(_ results: [Any])
     
@@ -35,19 +33,8 @@ extension VisionRequestResultHandlerProtocol {
                 return
             }
             
-            self.delegate?.didReceiveResults(observations)
+            self.didReceiveResults(observations)
         }
-    }
-    
-}
-
-class VisionRequestResultHandler:
-      VisionRequestResultHandlerProtocol  {
-    
-    var delegate: VisionRequestResultHandlerDelegate?
-    
-    init(delegate: VisionRequestResultHandlerDelegate?) {
-        self.delegate = delegate
     }
     
 }

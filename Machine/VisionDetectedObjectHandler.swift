@@ -8,22 +8,36 @@
 
 import Vision
 
-protocol VisionDetectedObjectHandlerDelegate:
-    VisionRequestResultHandlerDelegate {
+extension VisionRequestResultHandlerProtocol
+    where Request: VNDetectRectanglesRequest {
+    
+    func didReceiveResults(_ results: [Any]) {
+        if let delegate = delegate as? VisionDetectedObjectHandlerDelegate {
+            let boxes = results
+                .flatMap { $0 as? VNDetectedObjectObservation }
+                .map { $0.boundingBox }
+                .sorted { $0.minX < $1.minX }
+            
+            delegate.didReceiveBoundingBoxes(boxes)
+        }
+    }
+    
+}
+
+protocol VisionDetectedObjectHandlerDelegate {
     
     func didReceiveBoundingBoxes(_ boxes: [NSRect])
     
 }
 
-extension VisionDetectedObjectHandlerDelegate {
+class VisionDetectedObjectHandler: VisionRequestResultHandlerProtocol {
     
-    func didReceiveResults(_ results: [Any]) {
-        let boxes = results
-            .flatMap { $0 as? VNDetectedObjectObservation }
-            .map { $0.boundingBox }
-            .sorted { $0.minX < $1.minX }
+    typealias Request = VNDetectRectanglesRequest
+    
+    var delegate: Any?
         
-        didReceiveBoundingBoxes(boxes)
+    init(delegate: VisionDetectedObjectHandlerDelegate) {
+        self.delegate = delegate
     }
     
 }

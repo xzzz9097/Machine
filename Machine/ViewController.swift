@@ -12,6 +12,7 @@ import Vision
 
 class ViewController: NSViewController,
                       VisionDetectedObjectHandlerDelegate,
+                      VisionClassificationObservationHandlerDelegate,
                       NSWindowDelegate {
     
     var requestDelegate = VisionRequestCaptureDelegate.default
@@ -105,7 +106,7 @@ class ViewController: NSViewController,
     }
     
     func prepareFaceRequest() {
-        let detectedObjectHandler = VisionRequestResultHandler(delegate: self)
+        let detectedObjectHandler = VisionDetectedObjectHandler(delegate: self)
         
         visionRequests.append(
             VNDetectFaceRectanglesRequest(
@@ -119,9 +120,11 @@ class ViewController: NSViewController,
             fatalError("Failed to load ResNet model")
         }
         
+        let classificationObservationHandler = VisionClassificationObservationHandler(delegate: self)
+        
         visionRequests.append(
             VNCoreMLRequest(model: resnet,
-                            completionHandler: didReceiveResnetResults)
+                            completionHandler: classificationObservationHandler.requestResultHandler)
         )
     }
     
@@ -163,29 +166,6 @@ class ViewController: NSViewController,
                 statusView.stringValue = "You're (not) being watched"
                 faceViews              = [ ]
             }
-        }
-    }
-    
-    func didReceiveResnetResults(request: VNRequest, error: Error?) {
-        guard let results = request.results else {
-            return
-        }
-        
-        let classifications = results[0...4] // top 4 results
-            .flatMap { $0 as? VNClassificationObservation }
-            .filter { $0.confidence > 0.3 }
-            .map { "\($0.identifier) \(($0.confidence * 100.0).rounded())" }
-        
-        guard let first = classifications.first else {
-            DispatchQueue.main.async {
-                self.statusView.stringValue = "Nothing 🤔 detected..."
-            }
-            
-            return
-        }
-        
-        DispatchQueue.main.async {
-            self.statusView.stringValue = String(describing: first)
         }
     }
     
@@ -237,6 +217,26 @@ class ViewController: NSViewController,
                     )
                 )
             }
+        }
+    }
+    
+    // MARK: VisionClassificationObservationHandlerDelegate
+    
+    func didReceiveClassificationObservations(_ observations: [VNClassificationObservation]) {
+        let classifications = observations[0...4] // top 4 results
+            .filter { $0.confidence > 0.3 }
+            .map { "\($0.identifier) \(($0.confidence * 100.0).rounded())" }
+        
+        guard let first = classifications.first else {
+            DispatchQueue.main.async {
+                self.statusView.stringValue = "Nothing 🤔 detected..."
+            }
+            
+            return
+        }
+        
+        DispatchQueue.main.async {
+            self.statusView.stringValue = String(describing: first)
         }
     }
     
