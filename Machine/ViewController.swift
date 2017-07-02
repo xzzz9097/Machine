@@ -16,6 +16,8 @@ class ViewController: NSViewController,
     
     var requestDelegate = VisionRequestCaptureDelegate.default
     
+    var resnetDelegate  = VisionRequestCaptureDelegate.default
+    
     var captureSession = CaptureSession()
     
     var hideFace = false
@@ -98,9 +100,26 @@ class ViewController: NSViewController,
             failHandler: { self.resetFaceViews() }
         )
         
+        prepareResnetModel()
+        
         captureSession.delegate = requestDelegate
         
         cameraView.layer?.addSublayer(captureSession.previewLayer)
+    }
+    
+    func prepareResnetModel() {
+        
+        guard let resnet = try? VNCoreMLModel(for: Resnet50().model) else {
+            fatalError("Failed to load ResNet model")
+        }
+        
+        resnetDelegate.configure(
+            for: VNCoreMLRequest(model: resnet,
+                                 completionHandler: didReceiveResnetResults),
+            failHandler: { print("Error") }
+        )
+        
+        captureSession.delegate = resnetDelegate
     }
     
     override func viewDidLayout() {
@@ -141,6 +160,29 @@ class ViewController: NSViewController,
                 statusView.stringValue = "You're (not) being watched"
                 faceViews              = [ ]
             }
+        }
+    }
+    
+    func didReceiveResnetResults(request: VNRequest, error: Error?) {
+        guard let results = request.results else {
+            return
+        }
+        
+        let classifications = results[0...4] // top 4 results
+            .flatMap { $0 as? VNClassificationObservation }
+            .filter { $0.confidence > 0.3 }
+            .map { "\($0.identifier) \(($0.confidence * 100.0).rounded())" }
+        
+        guard let first = classifications.first else {
+            DispatchQueue.main.async {
+                self.statusView.stringValue = "Nothing 🤔 detected..."
+            }
+            
+            return
+        }
+        
+        DispatchQueue.main.async {
+            self.statusView.stringValue = String(describing: first)
         }
     }
     
@@ -208,4 +250,3 @@ class ViewController: NSViewController,
     }
     
 }
-
