@@ -11,11 +11,11 @@ import AVFoundation
 import Vision
 
 class ViewController: NSViewController,
-                      VisionDetectedObjectHandlerDelegate,
-                      VisionClassificationObservationHandlerDelegate,
+                      VNDetectedObjectDelegate,
+                      VNClassificationObservationDelegate,
                       NSWindowDelegate {
     
-    var requestDelegate = VisionRequestCaptureDelegate.default
+    var requestDelegate = VNRequestCaptureDelegate.default
     
     var visionRequests: [VNRequest] = [ ]
         
@@ -106,7 +106,7 @@ class ViewController: NSViewController,
     }
     
     func prepareFaceRequest() {
-        let detectedObjectHandler = VisionDetectedObjectHandler(delegate: self)
+        let detectedObjectHandler = VNDetectedObjectHandler(delegate: self)
         
         visionRequests.append(
             VNDetectFaceRectanglesRequest(
@@ -120,7 +120,7 @@ class ViewController: NSViewController,
             fatalError("Failed to load ResNet model")
         }
         
-        let classificationObservationHandler = VisionClassificationObservationHandler(delegate: self)
+        let classificationObservationHandler = VNClassificationObservationHandler(delegate: self)
         
         visionRequests.append(
             VNCoreMLRequest(model: resnet,

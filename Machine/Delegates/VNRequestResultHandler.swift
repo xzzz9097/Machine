@@ -8,7 +8,7 @@
 
 import Vision
 
-protocol VisionRequestResultHandlerProtocol {
+protocol VNRequestResultHandler {
     
     associatedtype Request
     
@@ -18,7 +18,7 @@ protocol VisionRequestResultHandlerProtocol {
     
 }
 
-extension VisionRequestResultHandlerProtocol {
+extension VNRequestResultHandler {
     
     var requestResultHandler: VNRequestCompletionHandler {
         return {

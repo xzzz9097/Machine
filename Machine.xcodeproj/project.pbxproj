@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0C050C331F0679B80091B8BA /* VisionRequestResultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C050C321F0679B80091B8BA /* VisionRequestResultHandler.swift */; };
-		0C050C361F0699E40091B8BA /* VisionDetectedObjectHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C050C351F0699E40091B8BA /* VisionDetectedObjectHandler.swift */; };
-		0C26FE431F0526B400E56DD8 /* VisionRequestCaptureDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C26FE421F0526B400E56DD8 /* VisionRequestCaptureDelegate.swift */; };
+		0C050C331F0679B80091B8BA /* VNRequestResultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C050C321F0679B80091B8BA /* VNRequestResultHandler.swift */; };
+		0C050C361F0699E40091B8BA /* VNDetectedObjectHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C050C351F0699E40091B8BA /* VNDetectedObjectHandler.swift */; };
+		0C26FE431F0526B400E56DD8 /* VNRequestCaptureDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C26FE421F0526B400E56DD8 /* VNRequestCaptureDelegate.swift */; };
 		0C83D70C1F08E9E600D651FC /* Resnet50.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0C83D70B1F08E9E600D651FC /* Resnet50.mlmodel */; };
-		0C83D70E1F09084700D651FC /* VisionClassificationObservationHandlerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C83D70D1F09084700D651FC /* VisionClassificationObservationHandlerDelegate.swift */; };
+		0C83D70E1F09084700D651FC /* VNClassificationObservationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C83D70D1F09084700D651FC /* VNClassificationObservationHandler.swift */; };
 		0C9A215B1F03E16F00861B50 /* EmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A215A1F03E16F00861B50 /* EmojiView.swift */; };
 		0C9A215D1F03E2A100861B50 /* NSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A215C1F03E2A100861B50 /* NSView.swift */; };
 		0C9A21601F03E35F00861B50 /* NSTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A215F1F03E35F00861B50 /* NSTextField.swift */; };
@@ -27,11 +27,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0C050C321F0679B80091B8BA /* VisionRequestResultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionRequestResultHandler.swift; sourceTree = "<group>"; };
-		0C050C351F0699E40091B8BA /* VisionDetectedObjectHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionDetectedObjectHandler.swift; sourceTree = "<group>"; };
-		0C26FE421F0526B400E56DD8 /* VisionRequestCaptureDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionRequestCaptureDelegate.swift; sourceTree = "<group>"; };
+		0C050C321F0679B80091B8BA /* VNRequestResultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VNRequestResultHandler.swift; sourceTree = "<group>"; };
+		0C050C351F0699E40091B8BA /* VNDetectedObjectHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VNDetectedObjectHandler.swift; sourceTree = "<group>"; };
+		0C26FE421F0526B400E56DD8 /* VNRequestCaptureDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VNRequestCaptureDelegate.swift; sourceTree = "<group>"; };
 		0C83D70B1F08E9E600D651FC /* Resnet50.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = Resnet50.mlmodel; path = ../../../Downloads/Resnet50.mlmodel; sourceTree = "<group>"; };
-		0C83D70D1F09084700D651FC /* VisionClassificationObservationHandlerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionClassificationObservationHandlerDelegate.swift; sourceTree = "<group>"; };
+		0C83D70D1F09084700D651FC /* VNClassificationObservationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VNClassificationObservationHandler.swift; sourceTree = "<group>"; };
 		0C9A215A1F03E16F00861B50 /* EmojiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiView.swift; sourceTree = "<group>"; };
 		0C9A215C1F03E2A100861B50 /* NSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSView.swift; sourceTree = "<group>"; };
 		0C9A215F1F03E35F00861B50 /* NSTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSTextField.swift; sourceTree = "<group>"; };
@@ -60,7 +60,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0C9A215E1F03E2AB00861B50 /* Extensions */ = {
+		0C813BE71F094F6C00A9CCFF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0C9A215A1F03E16F00861B50 /* EmojiView.swift */,
+				0C9A21651F03E61B00861B50 /* FaceView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		0C813BE81F094FF500A9CCFF /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				0C26FE421F0526B400E56DD8 /* VNRequestCaptureDelegate.swift */,
+				0C050C321F0679B80091B8BA /* VNRequestResultHandler.swift */,
+				0C050C351F0699E40091B8BA /* VNDetectedObjectHandler.swift */,
+				0C83D70D1F09084700D651FC /* VNClassificationObservationHandler.swift */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
+		0C813BE91F09501900A9CCFF /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				0C9A215F1F03E35F00861B50 /* NSTextField.swift */,
@@ -68,7 +88,7 @@
 				0C9A21631F03E59400861B50 /* CGRect.swift */,
 				0C9A215C1F03E2A100861B50 /* NSView.swift */,
 			);
-			name = Extensions;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		0CB13FE41F01B3AC00D3F18A = {
@@ -92,16 +112,12 @@
 			children = (
 				0CB13FF01F01B3AC00D3F18A /* AppDelegate.swift */,
 				0CB13FF21F01B3AC00D3F18A /* ViewController.swift */,
-				0C26FE421F0526B400E56DD8 /* VisionRequestCaptureDelegate.swift */,
-				0C9A215A1F03E16F00861B50 /* EmojiView.swift */,
-				0C050C321F0679B80091B8BA /* VisionRequestResultHandler.swift */,
+				0C813BE81F094FF500A9CCFF /* Delegates */,
+				0C813BE71F094F6C00A9CCFF /* Views */,
 				0C83D70B1F08E9E600D651FC /* Resnet50.mlmodel */,
-				0C050C351F0699E40091B8BA /* VisionDetectedObjectHandler.swift */,
-				0C83D70D1F09084700D651FC /* VisionClassificationObservationHandlerDelegate.swift */,
 				0C9A21691F04300B00861B50 /* CaptureSession.swift */,
 				0C9A216E1F0432C900861B50 /* CaptureFrameDuration.swift */,
-				0C9A21651F03E61B00861B50 /* FaceView.swift */,
-				0C9A215E1F03E2AB00861B50 /* Extensions */,
+				0C813BE91F09501900A9CCFF /* Extensions */,
 				0CB13FF41F01B3AC00D3F18A /* Assets.xcassets */,
 				0CB13FF61F01B3AC00D3F18A /* Main.storyboard */,
 				0CB13FF91F01B3AC00D3F18A /* Info.plist */,
@@ -184,16 +200,16 @@
 				0C9A216F1F0432C900861B50 /* CaptureFrameDuration.swift in Sources */,
 				0CB13FF31F01B3AC00D3F18A /* ViewController.swift in Sources */,
 				0CB13FF11F01B3AC00D3F18A /* AppDelegate.swift in Sources */,
-				0C050C361F0699E40091B8BA /* VisionDetectedObjectHandler.swift in Sources */,
+				0C050C361F0699E40091B8BA /* VNDetectedObjectHandler.swift in Sources */,
 				0C9A215B1F03E16F00861B50 /* EmojiView.swift in Sources */,
 				0C9A21661F03E61B00861B50 /* FaceView.swift in Sources */,
 				0C9A21601F03E35F00861B50 /* NSTextField.swift in Sources */,
-				0C26FE431F0526B400E56DD8 /* VisionRequestCaptureDelegate.swift in Sources */,
+				0C26FE431F0526B400E56DD8 /* VNRequestCaptureDelegate.swift in Sources */,
 				0C9A21621F03E55D00861B50 /* NSColor.swift in Sources */,
 				0C9A215D1F03E2A100861B50 /* NSView.swift in Sources */,
 				0C9A21641F03E59400861B50 /* CGRect.swift in Sources */,
-				0C050C331F0679B80091B8BA /* VisionRequestResultHandler.swift in Sources */,
-				0C83D70E1F09084700D651FC /* VisionClassificationObservationHandlerDelegate.swift in Sources */,
+				0C050C331F0679B80091B8BA /* VNRequestResultHandler.swift in Sources */,
+				0C83D70E1F09084700D651FC /* VNClassificationObservationHandler.swift in Sources */,
 				0C9A216A1F04300B00861B50 /* CaptureSession.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
