@@ -11,8 +11,10 @@ import AVFoundation
 import Vision
 
 extension ObservationTag {
-    static let faceRequest                 = "faceRequest"
-    static let resnetClassificationRequest = "resnetClassificationRequest"
+    static let faceRequest: NSString =
+        "faceRequest"
+    static let resnetClassificationRequest: NSString =
+        "resnetClassificationRequest"
 }
 
 class ViewController: NSViewController,
@@ -118,7 +120,7 @@ class ViewController: NSViewController,
     
     func prepareFaceRequest() {
         let detectedObjectHandler = VNDetectedObjectHandler(
-            tag: ObservationTag.faceRequest,
+            tag: .faceRequest,
             delegate: self
         )
         
@@ -135,7 +137,7 @@ class ViewController: NSViewController,
         }
         
         let classificationObservationHandler = VNClassificationObservationHandler(
-            tag: ObservationTag.resnetClassificationRequest,
+            tag: .resnetClassificationRequest,
             delegate: self
         )
         
@@ -188,7 +190,7 @@ class ViewController: NSViewController,
     
     // MARK: VisionDetectedObjectHandlerDelegate
     
-    func didReceiveBoundingBoxes(tag: ObservationTag.RawValue,
+    func didReceiveBoundingBoxes(tag: ObservationTag,
                                  _ boxes: [NSRect]) {
         let delta = boxes.count - faceViews.count
         
@@ -240,7 +242,7 @@ class ViewController: NSViewController,
     
     // MARK: VisionClassificationObservationHandlerDelegate
     
-    func didReceiveClassificationObservations(tag: ObservationTag.RawValue,
+    func didReceiveClassificationObservations(tag: ObservationTag,
                                               _ observations: [VNClassificationObservation]) {
         let classifications = observations[0...4] // top 4 results
             .filter { $0.confidence > 0.3 }

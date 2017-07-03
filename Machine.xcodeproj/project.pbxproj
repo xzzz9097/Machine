@@ -11,7 +11,7 @@
 		0C050C361F0699E40091B8BA /* VNDetectedObjectHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C050C351F0699E40091B8BA /* VNDetectedObjectHandler.swift */; };
 		0C26FE431F0526B400E56DD8 /* VNRequestCaptureDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C26FE421F0526B400E56DD8 /* VNRequestCaptureDelegate.swift */; };
 		0C813BEB1F09509C00A9CCFF /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C813BEA1F09509C00A9CCFF /* Status.swift */; };
-		0C813BEF1F096C1000A9CCFF /* ObservationTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C813BEE1F096C1000A9CCFF /* ObservationTag.swift */; };
+		0C813BFC1F0A85AB00A9CCFF /* ObservationTag.h in Sources */ = {isa = PBXBuildFile; fileRef = 0C813BFB1F0A85AB00A9CCFF /* ObservationTag.h */; };
 		0C83D70C1F08E9E600D651FC /* Resnet50.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0C83D70B1F08E9E600D651FC /* Resnet50.mlmodel */; };
 		0C83D70E1F09084700D651FC /* VNClassificationObservationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C83D70D1F09084700D651FC /* VNClassificationObservationHandler.swift */; };
 		0C9A215B1F03E16F00861B50 /* EmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A215A1F03E16F00861B50 /* EmojiView.swift */; };
@@ -33,7 +33,8 @@
 		0C050C351F0699E40091B8BA /* VNDetectedObjectHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VNDetectedObjectHandler.swift; sourceTree = "<group>"; };
 		0C26FE421F0526B400E56DD8 /* VNRequestCaptureDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VNRequestCaptureDelegate.swift; sourceTree = "<group>"; };
 		0C813BEA1F09509C00A9CCFF /* Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
-		0C813BEE1F096C1000A9CCFF /* ObservationTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationTag.swift; sourceTree = "<group>"; };
+		0C813BFA1F0A85AB00A9CCFF /* Machine-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Machine-Bridging-Header.h"; sourceTree = "<group>"; };
+		0C813BFB1F0A85AB00A9CCFF /* ObservationTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObservationTag.h; sourceTree = "<group>"; };
 		0C83D70B1F08E9E600D651FC /* Resnet50.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = Resnet50.mlmodel; path = ../../../Downloads/Resnet50.mlmodel; sourceTree = "<group>"; };
 		0C83D70D1F09084700D651FC /* VNClassificationObservationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VNClassificationObservationHandler.swift; sourceTree = "<group>"; };
 		0C9A215A1F03E16F00861B50 /* EmojiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiView.swift; sourceTree = "<group>"; };
@@ -78,7 +79,6 @@
 			children = (
 				0C26FE421F0526B400E56DD8 /* VNRequestCaptureDelegate.swift */,
 				0C050C321F0679B80091B8BA /* VNRequestResultHandler.swift */,
-				0C813BEE1F096C1000A9CCFF /* ObservationTag.swift */,
 				0C050C351F0699E40091B8BA /* VNDetectedObjectHandler.swift */,
 				0C83D70D1F09084700D651FC /* VNClassificationObservationHandler.swift */,
 			);
@@ -118,6 +118,7 @@
 				0CB13FF01F01B3AC00D3F18A /* AppDelegate.swift */,
 				0C813BEA1F09509C00A9CCFF /* Status.swift */,
 				0CB13FF21F01B3AC00D3F18A /* ViewController.swift */,
+				0C813BFB1F0A85AB00A9CCFF /* ObservationTag.h */,
 				0C813BE81F094FF500A9CCFF /* Delegates */,
 				0C813BE71F094F6C00A9CCFF /* Views */,
 				0C83D70B1F08E9E600D651FC /* Resnet50.mlmodel */,
@@ -128,6 +129,7 @@
 				0CB13FF61F01B3AC00D3F18A /* Main.storyboard */,
 				0CB13FF91F01B3AC00D3F18A /* Info.plist */,
 				0CB13FFA1F01B3AC00D3F18A /* Machine.entitlements */,
+				0C813BFA1F0A85AB00A9CCFF /* Machine-Bridging-Header.h */,
 			);
 			path = Machine;
 			sourceTree = "<group>";
@@ -164,6 +166,7 @@
 				TargetAttributes = {
 					0CB13FEC1F01B3AC00D3F18A = {
 						CreatedOnToolsVersion = 9.0;
+						LastSwiftMigration = 0900;
 					};
 				};
 			};
@@ -217,7 +220,7 @@
 				0C9A21641F03E59400861B50 /* CGRect.swift in Sources */,
 				0C050C331F0679B80091B8BA /* VNRequestResultHandler.swift in Sources */,
 				0C83D70E1F09084700D651FC /* VNClassificationObservationHandler.swift in Sources */,
-				0C813BEF1F096C1000A9CCFF /* ObservationTag.swift in Sources */,
+				0C813BFC1F0A85AB00A9CCFF /* ObservationTag.h in Sources */,
 				0C9A216A1F04300B00861B50 /* CaptureSession.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -342,12 +345,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Machine/Machine.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Machine/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.edge.Machine;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Machine/Machine-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
@@ -356,12 +362,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Machine/Machine.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = Machine/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.edge.Machine;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Machine/Machine-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 			};
 			name = Release;

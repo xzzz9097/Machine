@@ -14,9 +14,9 @@ protocol VNRequestResultHandler {
     
     var delegate: Any? { get set }
     
-    var tag: ObservationTag.RawValue { get set }
+    var tag: ObservationTag { get set }
     
-    func didReceiveResults(tag: ObservationTag.RawValue, _ results: [Any])
+    func didReceiveResults(tag: ObservationTag, _ results: [Any])
     
 }
 

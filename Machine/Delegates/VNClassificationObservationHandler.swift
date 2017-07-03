@@ -11,7 +11,7 @@ import Vision
 extension VNRequestResultHandler
     where Request: VNCoreMLRequest {
     
-    func didReceiveResults(tag: ObservationTag.RawValue, _ results: [Any]) {
+    func didReceiveResults(tag: ObservationTag, _ results: [Any]) {
         if let delegate = delegate as? VNClassificationObservationDelegate {
             let classifications = results
                 .flatMap { $0 as? VNClassificationObservation }
@@ -25,7 +25,7 @@ extension VNRequestResultHandler
 
 protocol VNClassificationObservationDelegate {
     
-    func didReceiveClassificationObservations(tag: ObservationTag.RawValue,
+    func didReceiveClassificationObservations(tag: ObservationTag,
                                               _ observations: [VNClassificationObservation])
     
 }
@@ -36,9 +36,9 @@ class VNClassificationObservationHandler: VNRequestResultHandler {
     
     var delegate: Any?
     
-    var tag: ObservationTag.RawValue
+    var tag: ObservationTag
     
-    init(tag: ObservationTag.RawValue,
+    init(tag: ObservationTag,
          delegate: VNDetectedObjectDelegate) {
         self.tag      = tag
         self.delegate = delegate
