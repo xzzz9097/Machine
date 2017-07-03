@@ -140,8 +140,10 @@ class ViewController: NSViewController,
         )
         
         visionRequests.append(
-            VNCoreMLRequest(model: resnet,
-                            completionHandler: classificationObservationHandler.requestResultHandler)
+            VNCoreMLRequest(
+                model: resnet,
+                completionHandler: classificationObservationHandler.requestResultHandler
+            )
         )
     }
     

@@ -50,8 +50,8 @@ extension ViewController: VNDetectedObjectDelegate {
         for (box, view) in zip(boxes, faceViews) {
             DispatchQueue.main.async {
                 view.updateFrame(to: box.scaled(
-                    width: self.cameraView.bounds.width,
-                    height: self.cameraView.bounds.height
+                        width: self.cameraView.bounds.width,
+                        height: self.cameraView.bounds.height
                     )
                 )
             }
