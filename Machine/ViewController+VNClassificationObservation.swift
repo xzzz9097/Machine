@@ -14,7 +14,9 @@ extension ViewController: VNClassificationObservationDelegate {
                                               _ observations: [VNClassificationObservation]) {
         let classifications = observations[0...4] // top 4 results
             .filter { $0.confidence > 0.3 }
-            .map { "\($0.identifier) \(($0.confidence * 100.0).rounded())" }
+            .map {
+                "\($0.identifier.split(separator: ",").first!) \(($0.confidence * 100.0).rounded())"
+            }
         
         guard let first = classifications.first else {
             DispatchQueue.main.async {
