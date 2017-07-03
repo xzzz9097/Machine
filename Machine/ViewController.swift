@@ -18,8 +18,6 @@ extension ObservationTag {
 }
 
 class ViewController: NSViewController,
-                      VNDetectedObjectDelegate,
-                      VNClassificationObservationDelegate,
                       NSWindowDelegate {
     
     var requestDelegate = VNRequestCaptureDelegate.default
@@ -185,79 +183,6 @@ class ViewController: NSViewController,
                 statusView.stringValue = "You're (not) being watched"
                 faceViews              = [ ]
             }
-        }
-    }
-    
-    // MARK: VisionDetectedObjectHandlerDelegate
-    
-    func didReceiveBoundingBoxes(tag: ObservationTag,
-                                 _ boxes: [NSRect]) {
-        let delta = boxes.count - faceViews.count
-        
-        if abs(delta) > 0 {
-            DispatchQueue.main.async {
-                switch boxes.count {
-                case 0:
-                    self.status.components[.faceDetection] = StatusComponent.faceDetection.defaultValue
-                default:
-                    self.status.components[.faceDetection] = "\(boxes.count) 😀 detected"
-                }
-            }
-        }
-        
-        if delta > 0 {
-            for _ in 0..<delta {
-                DispatchQueue.main.async {
-                    self.faceViews.append(FaceView(frame: NSRect(),
-                                                   hiddenFace: self.hideFace))
-                }
-            }
-        } else if delta < 0 {
-            for _ in 0..<abs(delta) {
-                DispatchQueue.main.async {
-                    if !self.faceViews.isEmpty { self.faceViews.removeLast() }
-                }
-            }
-        }
-        
-        if boxes.isEmpty {
-            resetFaceViews()
-            return
-        }
-        
-        DispatchQueue.main.async {
-            self.faceViews = self.faceViews.sorted { $0.frame.minX < $1.frame.minX }
-        }
-        
-        for (box, view) in zip(boxes, faceViews) {
-            DispatchQueue.main.async {
-                view.updateFrame(to: box.scaled(
-                        width: self.cameraView.bounds.width,
-                        height: self.cameraView.bounds.height
-                    )
-                )
-            }
-        }
-    }
-    
-    // MARK: VisionClassificationObservationHandlerDelegate
-    
-    func didReceiveClassificationObservations(tag: ObservationTag,
-                                              _ observations: [VNClassificationObservation]) {
-        let classifications = observations[0...4] // top 4 results
-            .filter { $0.confidence > 0.3 }
-            .map { "\($0.identifier) \(($0.confidence * 100.0).rounded())" }
-        
-        guard let first = classifications.first else {
-            DispatchQueue.main.async {
-                self.status.components[.classificationObservation] = StatusComponent.classificationObservation.defaultValue
-            }
-            
-            return
-        }
-        
-        DispatchQueue.main.async {
-            self.status.components[.classificationObservation] = String(describing: first)
         }
     }
     

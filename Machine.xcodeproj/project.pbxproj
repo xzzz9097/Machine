@@ -12,6 +12,8 @@
 		0C26FE431F0526B400E56DD8 /* VNRequestCaptureDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C26FE421F0526B400E56DD8 /* VNRequestCaptureDelegate.swift */; };
 		0C813BEB1F09509C00A9CCFF /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C813BEA1F09509C00A9CCFF /* Status.swift */; };
 		0C813BFC1F0A85AB00A9CCFF /* ObservationTag.h in Sources */ = {isa = PBXBuildFile; fileRef = 0C813BFB1F0A85AB00A9CCFF /* ObservationTag.h */; };
+		0C813BFE1F0A9F0300A9CCFF /* ViewController+VNDetectedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C813BFD1F0A9F0300A9CCFF /* ViewController+VNDetectedObject.swift */; };
+		0C813C001F0A9FA500A9CCFF /* ViewController+VNClassificationObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C813BFF1F0A9FA500A9CCFF /* ViewController+VNClassificationObservation.swift */; };
 		0C83D70C1F08E9E600D651FC /* Resnet50.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 0C83D70B1F08E9E600D651FC /* Resnet50.mlmodel */; };
 		0C83D70E1F09084700D651FC /* VNClassificationObservationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C83D70D1F09084700D651FC /* VNClassificationObservationHandler.swift */; };
 		0C9A215B1F03E16F00861B50 /* EmojiView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C9A215A1F03E16F00861B50 /* EmojiView.swift */; };
@@ -35,6 +37,8 @@
 		0C813BEA1F09509C00A9CCFF /* Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
 		0C813BFA1F0A85AB00A9CCFF /* Machine-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Machine-Bridging-Header.h"; sourceTree = "<group>"; };
 		0C813BFB1F0A85AB00A9CCFF /* ObservationTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObservationTag.h; sourceTree = "<group>"; };
+		0C813BFD1F0A9F0300A9CCFF /* ViewController+VNDetectedObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+VNDetectedObject.swift"; sourceTree = "<group>"; };
+		0C813BFF1F0A9FA500A9CCFF /* ViewController+VNClassificationObservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+VNClassificationObservation.swift"; sourceTree = "<group>"; };
 		0C83D70B1F08E9E600D651FC /* Resnet50.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = Resnet50.mlmodel; path = ../../../Downloads/Resnet50.mlmodel; sourceTree = "<group>"; };
 		0C83D70D1F09084700D651FC /* VNClassificationObservationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VNClassificationObservationHandler.swift; sourceTree = "<group>"; };
 		0C9A215A1F03E16F00861B50 /* EmojiView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiView.swift; sourceTree = "<group>"; };
@@ -119,6 +123,8 @@
 				0C813BEA1F09509C00A9CCFF /* Status.swift */,
 				0CB13FF21F01B3AC00D3F18A /* ViewController.swift */,
 				0C813BFB1F0A85AB00A9CCFF /* ObservationTag.h */,
+				0C813BFD1F0A9F0300A9CCFF /* ViewController+VNDetectedObject.swift */,
+				0C813BFF1F0A9FA500A9CCFF /* ViewController+VNClassificationObservation.swift */,
 				0C813BE81F094FF500A9CCFF /* Delegates */,
 				0C813BE71F094F6C00A9CCFF /* Views */,
 				0C83D70B1F08E9E600D651FC /* Resnet50.mlmodel */,
@@ -212,12 +218,14 @@
 				0C050C361F0699E40091B8BA /* VNDetectedObjectHandler.swift in Sources */,
 				0C9A215B1F03E16F00861B50 /* EmojiView.swift in Sources */,
 				0C9A21661F03E61B00861B50 /* FaceView.swift in Sources */,
+				0C813C001F0A9FA500A9CCFF /* ViewController+VNClassificationObservation.swift in Sources */,
 				0C9A21601F03E35F00861B50 /* NSTextField.swift in Sources */,
 				0C26FE431F0526B400E56DD8 /* VNRequestCaptureDelegate.swift in Sources */,
 				0C9A21621F03E55D00861B50 /* NSColor.swift in Sources */,
 				0C9A215D1F03E2A100861B50 /* NSView.swift in Sources */,
 				0C813BEB1F09509C00A9CCFF /* Status.swift in Sources */,
 				0C9A21641F03E59400861B50 /* CGRect.swift in Sources */,
+				0C813BFE1F0A9F0300A9CCFF /* ViewController+VNDetectedObject.swift in Sources */,
 				0C050C331F0679B80091B8BA /* VNRequestResultHandler.swift in Sources */,
 				0C83D70E1F09084700D651FC /* VNClassificationObservationHandler.swift in Sources */,
 				0C813BFC1F0A85AB00A9CCFF /* ObservationTag.h in Sources */,
