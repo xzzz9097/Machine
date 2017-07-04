@@ -117,15 +117,9 @@ class ViewController: NSViewController,
     }
     
     func prepareFaceRequest() {
-        let detectedObjectHandler = VNDetectedObjectHandler(
-            tag: .faceRequest,
-            delegate: self
-        )
-        
         visionRequests.append(
-            VNDetectFaceRectanglesRequest(
-                completionHandler: detectedObjectHandler.requestResultHandler
-            )
+            VNDetectFaceRectanglesRequest(tag: .faceRequest,
+                                          delegate: self)
         )
     }
     
@@ -134,16 +128,10 @@ class ViewController: NSViewController,
             fatalError("Failed to load ResNet model")
         }
         
-        let classificationObservationHandler = VNClassificationObservationHandler(
-            tag: .resnetClassificationRequest,
-            delegate: self
-        )
-        
         visionRequests.append(
-            VNCoreMLRequest(
-                model: resnet,
-                completionHandler: classificationObservationHandler.requestResultHandler
-            )
+            VNCoreMLRequest(model: resnet,
+                            tag: .resnetClassificationRequest,
+                            delegate: self)
         )
     }
     

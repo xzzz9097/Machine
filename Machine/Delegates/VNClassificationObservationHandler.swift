@@ -39,7 +39,7 @@ class VNClassificationObservationHandler: VNRequestResultHandler {
     var tag: ObservationTag
     
     init(tag: ObservationTag,
-         delegate: VNDetectedObjectDelegate) {
+         delegate: VNClassificationObservationDelegate) {
         self.tag      = tag
         self.delegate = delegate
     }
