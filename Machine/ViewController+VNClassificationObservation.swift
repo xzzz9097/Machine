@@ -29,14 +29,14 @@ extension ViewController: VNClassificationObservationDelegate {
         
         guard let first = classifications.first else {
             DispatchQueue.main.async {
-                self.status.components[.classificationObservation] = StatusComponent.classificationObservation.defaultValue
+                self.status.components[.resnetClassificationObservation] = StatusComponent.resnetClassificationObservation.defaultValue
             }
             
             return
         }
         
         DispatchQueue.main.async {
-            self.status.components[.classificationObservation] = String(describing: first)
+            self.status.components[.resnetClassificationObservation] = String(describing: first)
         }
     }
     

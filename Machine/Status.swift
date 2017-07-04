@@ -10,14 +10,14 @@ import Vision
 
 enum StatusComponent {
     case faceDetection
-    case classificationObservation
+    case resnetClassificationObservation
     case none
     
     var defaultValue: String {
         switch self {
         case .faceDetection:
             return "No faces detected"
-        case .classificationObservation:
+        case .resnetClassificationObservation:
             return "no objects detected"
         case .none:
             return "Nothing detected 🤔"
