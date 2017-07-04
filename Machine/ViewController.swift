@@ -22,7 +22,7 @@ class ViewController: NSViewController,
     
     var requestDelegate = VNRequestCaptureDelegate.default
     
-    var visionRequests: [VNRequest] = [ ] {
+    var visionRequests: VNRequests = [ : ] {
         didSet {
             requestDelegate.configure(for: visionRequests)
         }
@@ -107,8 +107,8 @@ class ViewController: NSViewController,
     }
     
     func loadCaptureSession() {
-        prepareFaceRequest()
-        prepareResnetRequest()
+        addFaceRequest()
+        addResnetRequest()
         
         requestDelegate.configure(
             for: visionRequests,
@@ -120,23 +120,21 @@ class ViewController: NSViewController,
         cameraView.layer?.addSublayer(captureSession.previewLayer)
     }
     
-    func prepareFaceRequest() {
-        visionRequests.append(
+    func addFaceRequest() {
+        visionRequests[.faceRequest] =
             VNDetectFaceRectanglesRequest(tag: .faceRequest,
                                           delegate: self)
-        )
     }
     
-    func prepareResnetRequest() {
+    func addResnetRequest() {
         guard let resnet = try? VNCoreMLModel(for: Resnet50().model) else {
             fatalError("Failed to load ResNet model")
         }
         
-        visionRequests.append(
+        visionRequests[.resnetClassificationRequest] =
             VNCoreMLRequest(model: resnet,
                             tag: .resnetClassificationRequest,
                             delegate: self)
-        )
     }
     
     override func viewDidLayout() {

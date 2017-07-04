@@ -12,11 +12,12 @@ import Vision
 
 typealias VNRequestFailHandler   = () -> ()
 typealias VNRequestSuccesHandler = (VNRequest, Error?) -> ()
+typealias VNRequests             = [ObservationTag: VNRequest]
 
 class VNRequestCaptureDelegate: NSObject,
                                 AVCaptureVideoDataOutputSampleBufferDelegate {
     
-    var requests: [VNRequest]?
+    var requests: VNRequests?
     
     var shouldTrack = true
     
@@ -26,19 +27,19 @@ class VNRequestCaptureDelegate: NSObject,
     
     private override init() { }
     
-    init(requests: [VNRequest],
+    init(requests: VNRequests,
          failHandler: @escaping VNRequestFailHandler) {
         super.init()
         configure(for: requests, failHandler: failHandler)
     }
     
-    func configure(for requests: [VNRequest],
+    func configure(for requests: VNRequests,
                    failHandler: @escaping VNRequestFailHandler) {
         self.requests       = requests
         self.failHandler    = failHandler
     }
     
-    func configure(for requests: [VNRequest]) {
+    func configure(for requests: VNRequests) {
         self.requests       = requests
     }
     
@@ -61,7 +62,9 @@ class VNRequestCaptureDelegate: NSObject,
                                                         options: [:])
         
         do {
-            try imageRequestHandler.perform(requests)
+            try imageRequestHandler.perform(
+                requests.map { $0.value }
+            )
         } catch {
             print(error)
         }
