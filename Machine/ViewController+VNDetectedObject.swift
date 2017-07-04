@@ -25,9 +25,9 @@ extension ViewController: VNDetectedObjectDelegate {
             DispatchQueue.main.async {
                 switch boxes.count {
                 case 0:
-                    self.status.components[.faceDetection] = StatusComponent.faceDetection.defaultValue
+                    self.status.components[.faceObservation] = StatusComponent.faceObservation.defaultValue
                 default:
-                    self.status.components[.faceDetection] = "\(boxes.count) 😀 detected"
+                    self.status.components[.faceObservation] = "\(boxes.count) 😀 detected"
                 }
             }
         }
