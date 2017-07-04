@@ -38,6 +38,10 @@ class VNRequestCaptureDelegate: NSObject,
         self.failHandler    = failHandler
     }
     
+    func configure(for requests: [VNRequest]) {
+        self.requests       = requests
+    }
+    
     func captureOutput(_ output: AVCaptureOutput,
                        didOutput sampleBuffer: CMSampleBuffer,
                        from connection: AVCaptureConnection) {

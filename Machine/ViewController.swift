@@ -22,7 +22,11 @@ class ViewController: NSViewController,
     
     var requestDelegate = VNRequestCaptureDelegate.default
     
-    var visionRequests: [VNRequest] = [ ]
+    var visionRequests: [VNRequest] = [ ] {
+        didSet {
+            requestDelegate.configure(for: visionRequests)
+        }
+    }
         
     var captureSession = CaptureSession()
     
