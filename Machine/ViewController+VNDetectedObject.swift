@@ -10,6 +10,15 @@ extension ViewController: VNDetectedObjectDelegate {
 
     func didReceiveBoundingBoxes(tag: ObservationTag,
                                  _ boxes: [NSRect]) {
+        switch tag {
+        case .faceRequest:
+            handleFaceBoxes(boxes)
+        default:
+            return
+        }
+    }
+    
+    func handleFaceBoxes(_ boxes: [NSRect]) {
         let delta = boxes.count - faceViews.count
         
         if abs(delta) > 0 {
