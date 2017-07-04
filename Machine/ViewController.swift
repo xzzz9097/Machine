@@ -88,6 +88,21 @@ class ViewController: NSViewController,
         }
     }
     
+    @IBAction func toggleResnetMenuItemClicked(_ sender: Any) {
+        let hasResnetRequest =
+            visionRequests[.resnetClassificationRequest] != nil
+        
+        if hasResnetRequest {
+            visionRequests.removeValue(forKey: .resnetClassificationRequest)
+        } else {
+            addResnetRequest()
+        }
+        
+        if let sender = sender as? NSMenuItem {
+            sender.state = !hasResnetRequest ? .on : .off
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -108,7 +123,6 @@ class ViewController: NSViewController,
     
     func loadCaptureSession() {
         addFaceRequest()
-        addResnetRequest()
         
         requestDelegate.configure(
             for: visionRequests,

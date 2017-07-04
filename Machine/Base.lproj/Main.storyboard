@@ -35,6 +35,12 @@
                                                 <action selector="lowPowerMenuItemClicked:" target="Ady-hI-5gd" id="UrO-hq-5D9"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="ResNet" id="nZe-xy-SeX">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="toggleResnetMenuItemClicked:" target="Ady-hI-5gd" id="phM-2h-nwc"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Hide faces (emojis)" keyEquivalent="e" id="hSN-W1-cVs">
                                             <connections>
                                                 <action selector="hideFacesMenuItemClicked:" target="Ady-hI-5gd" id="8QA-Gm-Fov"/>
