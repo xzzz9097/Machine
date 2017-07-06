@@ -22,12 +22,6 @@ class ViewController: NSViewController,
                       CaptureSessionDelegate {
     
     var requestDelegate = VNRequestCaptureDelegate.default
-    
-    var visionRequests: VNRequests = [ : ] {
-        didSet {
-            requestDelegate.configure(for: visionRequests)
-        }
-    }
         
     var captureSession = CaptureSession()
     
@@ -91,10 +85,10 @@ class ViewController: NSViewController,
     
     @IBAction func toggleResnetMenuItemClicked(_ sender: Any) {
         let hasResnetRequest =
-            visionRequests[.resnetClassificationRequest] != nil
+            requestDelegate.has(.resnetClassificationRequest)
         
         if hasResnetRequest {
-            visionRequests.removeValue(forKey: .resnetClassificationRequest)
+            requestDelegate.remove(.resnetClassificationRequest)
         } else {
             addResnetRequest()
         }
@@ -125,10 +119,7 @@ class ViewController: NSViewController,
     func loadCaptureSession() {
         addFaceRequest()
         
-        requestDelegate.configure(
-            for: visionRequests,
-            failHandler: { self.resetFaceViews() }
-        )
+        requestDelegate.configure(failHandler: { self.resetFaceViews() })
         
         captureSession.captureDelegate = requestDelegate
         captureSession.sessionDelegate = self
@@ -137,9 +128,9 @@ class ViewController: NSViewController,
     }
     
     func addFaceRequest() {
-        visionRequests[.faceRequest] =
-            VNDetectFaceRectanglesRequest(tag: .faceRequest,
-                                          delegate: self)
+        requestDelegate.add(VNDetectFaceRectanglesRequest(tag: .faceRequest,
+                                                          delegate: self),
+                            tag: .faceRequest)
     }
     
     func addResnetRequest() {
@@ -147,10 +138,10 @@ class ViewController: NSViewController,
             fatalError("Failed to load ResNet model")
         }
         
-        visionRequests[.resnetClassificationRequest] =
-            VNCoreMLRequest(model: resnet,
-                            tag: .resnetClassificationRequest,
-                            delegate: self)
+        requestDelegate.add(VNCoreMLRequest(model: resnet,
+                                            tag: .resnetClassificationRequest,
+                                            delegate: self),
+                            tag: .resnetClassificationRequest)
     }
     
     override func viewDidLayout() {

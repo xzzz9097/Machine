@@ -17,7 +17,7 @@ typealias VNRequests             = [ObservationTag: VNRequest]
 class VNRequestCaptureDelegate: NSObject,
                                 AVCaptureVideoDataOutputSampleBufferDelegate {
     
-    var requests: VNRequests?
+    private var requests: VNRequests = [ : ]
     
     var shouldTrack = true
     
@@ -33,21 +33,28 @@ class VNRequestCaptureDelegate: NSObject,
         configure(for: requests, failHandler: failHandler)
     }
     
-    func configure(for requests: VNRequests,
+    init(failHandler: @escaping VNRequestFailHandler) {
+        super.init()
+        configure(failHandler: failHandler)
+    }
+    
+    func configure(for requests: VNRequests? = nil,
                    failHandler: @escaping VNRequestFailHandler) {
-        self.requests       = requests
-        self.failHandler    = failHandler
+        if let requests = requests {
+            self.requests = requests
+        }
+        
+        self.failHandler = failHandler
     }
     
     func configure(for requests: VNRequests) {
-        self.requests       = requests
+        self.requests = requests
     }
     
     func captureOutput(_ output: AVCaptureOutput,
                        didOutput sampleBuffer: CMSampleBuffer,
                        from connection: AVCaptureConnection) {
-        guard   let requests = requests,
-                let failHandler = failHandler else {
+        guard   let failHandler = failHandler else {
                 return
         }
         
@@ -68,6 +75,19 @@ class VNRequestCaptureDelegate: NSObject,
         } catch {
             print(error)
         }
+    }
+    
+    func has(_ tag: ObservationTag) -> Bool {
+        return requests[tag] != nil
+    }
+    
+    func add(_ request: VNRequest,
+             tag: ObservationTag) {
+        requests[tag] = request
+    }
+    
+    func remove(_ request: ObservationTag) {
+        requests.removeValue(forKey: request)
     }
     
 }
