@@ -21,9 +21,11 @@ class CaptureSession {
     
     var previewLayer: AVCaptureVideoPreviewLayer!
     
-    weak var delegate: AVCaptureVideoDataOutputSampleBufferDelegate? {
+    weak var sessionDelegate: CaptureSessionDelegate?
+    
+    weak var captureDelegate: AVCaptureVideoDataOutputSampleBufferDelegate? {
         didSet {
-            videoOutput.setSampleBufferDelegate(delegate,
+            videoOutput.setSampleBufferDelegate(captureDelegate,
                                                 queue: captureQueue)
         }
     }
@@ -69,6 +71,22 @@ class CaptureSession {
         session.stopRunning()
     }
     
+    var isRunning: Bool {
+        set {
+            if newValue {
+                session.startRunning()
+            } else {
+                session.stopRunning()
+            }
+            
+            sessionDelegate?.didChangeSessionRunningState(newValue)
+        }
+        
+        get {
+            return session.isRunning
+        }
+    }
+    
     func setFrameDuration(_ times: CMTime) {
         setFrameDuration(connection: connection, times)
     }
@@ -76,5 +94,11 @@ class CaptureSession {
     func resetFrameDuration() {
         setFrameDuration(lowPower ? lowPowerFrameDuration : minFrameDuration)
     }
+    
+}
+
+protocol CaptureSessionDelegate: class {
+    
+    func didChangeSessionRunningState(_ running: Bool)
     
 }

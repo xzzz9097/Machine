@@ -18,7 +18,8 @@ extension ObservationTag {
 }
 
 class ViewController: NSViewController,
-                      NSWindowDelegate {
+                      NSWindowDelegate,
+                      CaptureSessionDelegate {
     
     var requestDelegate = VNRequestCaptureDelegate.default
     
@@ -129,7 +130,8 @@ class ViewController: NSViewController,
             failHandler: { self.resetFaceViews() }
         )
         
-        captureSession.delegate = requestDelegate
+        captureSession.captureDelegate = requestDelegate
+        captureSession.sessionDelegate = self
         
         cameraView.layer?.addSublayer(captureSession.previewLayer)
     }
@@ -178,17 +180,14 @@ class ViewController: NSViewController,
         }
     }
     
-    var isCaptureSessionRunning: Bool = false {
-        didSet {
-            if isCaptureSessionRunning {
-                captureSession.start()
-                eyeView.isHidden = true
-            } else {
-                captureSession.stop()
-                eyeView.isHidden       = false
-                statusView.stringValue = "You're (not) being watched"
-                faceViews              = [ ]
-            }
+    // MARK: CaptureSessionDelegate
+    
+    func didChangeSessionRunningState(_ running: Bool) {
+        eyeView.isHidden = running
+        
+        if !running {
+            statusView.stringValue = "You're (not) being watched"
+            faceViews              = [ ]
         }
     }
     
@@ -198,9 +197,9 @@ class ViewController: NSViewController,
         guard let window = notification.object as? NSWindow else { return }
         
         if window.occlusionState.contains(.visible) {
-            isCaptureSessionRunning = true
+            captureSession.isRunning = true
         } else {
-            isCaptureSessionRunning = false
+            captureSession.isRunning = false
         }
     }
     
