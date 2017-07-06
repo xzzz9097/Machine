@@ -36,7 +36,7 @@ class CaptureSession {
         loadCaptureSession()
     }
     
-    func loadCaptureSession() {
+    private func loadCaptureSession() {
         guard let camera = AVCaptureDevice.default(for: .video) else {
             fatalError("No video capture device available")
         }
@@ -63,11 +63,11 @@ class CaptureSession {
         }
     }
     
-    func start() {
+    private func start() {
         session.startRunning()
     }
     
-    func stop() {
+    private func stop() {
         session.stopRunning()
     }
     
