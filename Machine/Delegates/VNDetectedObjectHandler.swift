@@ -25,7 +25,7 @@ extension VNRequestResultHandler
     
 }
 
-protocol VNDetectedObjectDelegate {
+protocol VNDetectedObjectDelegate: class {
     
     func didReceiveBoundingBoxes(tag: ObservationTag,
                                  _ boxes: [NSRect])
@@ -36,7 +36,7 @@ class VNDetectedObjectHandler: VNRequestResultHandler {
     
     typealias Request = VNDetectRectanglesRequest
     
-    var delegate: Any?
+    weak var delegate: AnyObject?
     
     var tag: ObservationTag
         

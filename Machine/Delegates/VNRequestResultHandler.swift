@@ -8,11 +8,11 @@
 
 import Vision
 
-protocol VNRequestResultHandler {
+protocol VNRequestResultHandler: class {
     
     associatedtype Request
     
-    var delegate: Any? { get set }
+    var delegate: AnyObject? { get set }
     
     var tag: ObservationTag { get set }
     

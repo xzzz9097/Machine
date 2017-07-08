@@ -23,7 +23,7 @@ extension VNRequestResultHandler
     
 }
 
-protocol VNClassificationObservationDelegate {
+protocol VNClassificationObservationDelegate: class {
     
     func didReceiveClassificationObservations(tag: ObservationTag,
                                               _ observations: [VNClassificationObservation])
@@ -34,7 +34,7 @@ class VNClassificationObservationHandler: VNRequestResultHandler {
     
     typealias Request = VNCoreMLRequest
     
-    var delegate: Any?
+    weak var delegate: AnyObject?
     
     var tag: ObservationTag
     
