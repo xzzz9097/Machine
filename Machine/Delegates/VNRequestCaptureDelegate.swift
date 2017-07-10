@@ -65,7 +65,7 @@ class VNRequestCaptureDelegate: NSObject,
         }
         
         let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer,
-                                                        orientation: 1,
+                                                        orientation: .up,
                                                         options: [:])
         
         do {
